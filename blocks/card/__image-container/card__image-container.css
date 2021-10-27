@@ -1,0 +1,15 @@
+
+
+.card__image-container {
+  width: 100%;
+  margin: 0;
+}
+
+/* Если браузер не поддерживает свойство aspect-ratio, то реализуем соотношение сторон 1:1 через padding-bottom */
+@supports not (aspect-ratio: 1 / 1) {
+  .card__image-container {
+    padding-bottom: 100%;
+    position: relative;
+  }
+}
+

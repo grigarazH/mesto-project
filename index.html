@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mesto</title>
+  <link rel="stylesheet" href="./pages/index.css">
+</head>
+<body class="page">
+  <header class="header page__header"></header>
+  <main class="content page__content">
+    <section class="profile content__profile">
+     <img class="profile__avatar" src="./images/avatar.png" alt="Аватарка">
+     <div class="profile__info">
+       <h1 class="profile__name">Григорий Сухотин</h1>
+       <p class="profile__subtitle">Студент</p>
+       <button class="profile__edit-button"></button>
+     </div>
+     <button class="profile__add-button"></button>
+    </section>
+    <section class="cards content__cards">
+      <article class="card">
+        <figure class="card__image-container">
+          <img class="card__image" src="./images/places/everest.jpeg" alt="Эверест">
+        </figure>
+        <div class="card__description">
+          <h2 class="card__title">Эверест</h2>
+          <button class="card__like-button"></button>
+        </div>
+      </article>
+      <article class="card">
+        <figure class="card__image-container">
+          <img class="card__image" src="./images/places/venice.jpg" alt="Венеция">
+        </figure>
+        <div class="card__description">
+          <h2 class="card__title">Венеция</h2>
+          <button class="card__like-button"></button>
+        </div>
+      </article>
+      <article class="card">
+        <figure class="card__image-container">
+          <img class="card__image" src="./images/places/piter.jpg" alt="Питер">
+        </figure>
+        <div class="card__description">
+          <h2 class="card__title">Санкт-Петербург</h2>
+          <button class="card__like-button"></button>
+        </div>
+      </article>
+      <article class="card">
+        <figure class="card__image-container">
+          <img class="card__image" src="./images/places/paris.jpg" alt="Париж">
+        </figure>
+        <div class="card__description">
+          <h2 class="card__title">Париж</h2>
+          <button class="card__like-button"></button>
+        </div>
+      </article>
+      <article class="card">
+        <figure class="card__image-container">
+          <img class="card__image" src="./images/places/blacksea.png" alt="Чёрное море">
+        </figure>
+        <div class="card__description">
+          <h2 class="card__title">Чёрное море</h2>
+          <button class="card__like-button"></button>
+        </div>
+      </article>
+      <article class="card">
+        <figure class="card__image-container">
+          <img class="card__image" src="./images/places/rio.jpg" alt="Рио">
+        </figure>
+        <div class="card__description">
+          <h2 class="card__title">Рио-де-Жанейро</h2>
+          <button class="card__like-button"></button>
+        </div>
+      </article>
+    </section>
+  </main>
+  <footer class="footer page__footer">
+    <p class="footer__copyright">&copy; 2021 Mesto Russia</p>
+  </footer>
+  <div class="popup">
+    <form class="popup__container" name="edit_profile">
+      <fieldset class="popup__group">
+        <legend class="popup__title">Редактировать профиль</legend>
+        <input class="popup__input popup__input_type_name" id="profile_name" name="profile_name" type="text" placeholder="Имя" value="Григорий Сухотин">
+        <input class="popup__input popup__input_type_subtitle" id="profile_subtitle" name ="profile_subtitle" type="text" placeholder="Вид деятельности" value="Студент">
+        <button class="popup__submit" type="submit">Сохранить</button>
+        <button type="button" class="popup__close-button" id="popup_profile_close"></button>
+      </fieldset>
+    </form>
+  </div>
+</body>
+</html>
