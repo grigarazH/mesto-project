@@ -8,6 +8,8 @@
   font-size: 14px;
   line-height: 17px;
   border: none;
+  border-radius: 2px;
+  transition: opacity .3s linear .2s;
 }
 
 .popup__submit:hover {

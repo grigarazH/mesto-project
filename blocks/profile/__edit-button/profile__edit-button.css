@@ -11,9 +11,17 @@
   align-self: center;
   padding: 0;
   box-sizing: border-box;
+  transition: opacity .3s linear .2s;
 }
 
 .profile__edit-button:hover {
   opacity: .6;
   cursor: pointer;
+}
+
+@media screen and (max-width: 790px) {
+  .profile__edit-button {
+    width: 18px;
+    height: 18px;
+  }
 }

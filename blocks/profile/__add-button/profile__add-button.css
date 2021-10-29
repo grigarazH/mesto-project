@@ -10,6 +10,8 @@
   margin-left: auto;
   padding: 0;
   box-sizing: border-box;
+  border-radius: 2px;
+  transition: opacity .3s linear .2s;
 }
 
 .profile__add-button:hover {

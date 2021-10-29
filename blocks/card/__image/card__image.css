@@ -1,21 +1,7 @@
 .card__image {
-  width: 100%;
-}
-
-
-@supports (aspect-ratio: 1 / 1) {
-  .card__image {
-    aspect-ratio: 1 / 1;
-  }
-}
-
-/* Если браузер не поддерживает aspect-ratio, то используется position: absolute для самого изображения и padding-bottom для .image-container */
-@supports not (aspect-ratio: 1/1) {
-  .card__image {
-    height: 100%;
-    object-fit: cover;
-    position: absolute;
-  }
+  width: 282px;
+  height: 282px;
+  object-fit: cover;
 }
 
 

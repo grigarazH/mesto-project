@@ -1,15 +1,13 @@
 .header {
-  background-image: url(../../images/logo.svg);
-  background-size: 143px 33px;
-  background-repeat: no-repeat;
-  background-position: top left;
-  height: 74px;
+  min-height: 74px;
   border-bottom: 1px solid #545454;
   max-width: 880px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-@media screen and (max-width: 926px) {
+@media screen and (max-width: 790px) {
   .header {
-    background-position: 27px 0;
+    min-height: 56px;
   }
 }

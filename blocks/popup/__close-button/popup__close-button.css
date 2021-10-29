@@ -10,6 +10,7 @@
   top: calc(-34px - 8px);
   right: calc(-36px - 8px);
   padding: 0;
+  transition: opacity .3s linear .2s;
 }
 
 .popup__close-button:hover {
