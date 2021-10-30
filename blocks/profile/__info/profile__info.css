@@ -3,7 +3,7 @@
   display: grid;
   row-gap: 16px;
   column-gap: 18px;
-  grid-template-areas: "name edit" "subtitle .";
+  grid-template-areas: "name edit" "subtitle subtitle";
 }
 
 @media screen and (max-width: 790px) {
