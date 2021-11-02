@@ -9,6 +9,8 @@
   position: absolute;
   padding: 0;
   transition: opacity .3s linear .2s;
+  top: calc(-32px - 8px);
+  right: calc(-32px - 8px);
 }
 
 .popup__close-button:hover {
@@ -18,6 +20,7 @@
 
 @media screen and (max-width: 456px) {
   .popup__close-button {
+    top: calc(-32px - 16px);
     right: 0;
   }
 }

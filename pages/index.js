@@ -39,6 +39,7 @@ const addCardCloseButton = addCardPopup.querySelector(".popup__close-button");
 const addCardForm = addCardPopup.querySelector(".popup__container");
 const photoPopup = document.querySelector(".popup_type_photo");
 const photoPopupImage = document.querySelector(".popup__photo");
+const photoPopupCaption = document.querySelector(".popup__photo-caption");
 const profileNameEl = document.querySelector(".profile__name");
 const profileSubtitleEl = document.querySelector(".profile__subtitle");
 const addCardNameInput = addCardForm.querySelector("#add_card_name");
@@ -51,14 +52,18 @@ let profileSubtitle = document.querySelector(".profile__subtitle").textContent;
 function getCardElement(card) {
   const cardElement = cardTemplate.content.firstElementChild.cloneNode(true);
   const cardImage = cardElement.querySelector(".card__image");
-  const cardDescription = cardElement.querySelector(".card__title");
+  const cardImageContainer = cardElement.querySelector(".card__image-container")
+  const cardTitle = cardElement.querySelector(".card__title");
   cardImage.src = card.link;
   cardImage.alt = `Фотография места ${card.name}`;
-  cardImage.addEventListener("click", function() {
-
+  cardImageContainer.addEventListener("click", function() {
+    photoPopupImage.src = card.link;
+    photoPopupCaption.textContent = card.name;
     togglePopup(photoPopup);
+    console.log(photoPopupImage.clientHeight);
+    console.log(window.innerHeight * 0.75);
   });
-  cardDescription.textContent = card.name;
+  cardTitle.textContent = card.name;
   return cardElement;
 }
 
