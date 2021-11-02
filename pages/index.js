@@ -61,23 +61,34 @@ let editProfileCloseButton = editProfilePopup.querySelector(".popup__close-butto
 editProfileCloseButton.addEventListener("click", function() {
   togglePopup(editProfilePopup);
 });
+let editProfileForm = editProfilePopup.querySelector(".popup__container");
+
+editProfileForm.addEventListener("submit", function(evt) {
+  evt.preventDefault();
+  let editProfileNameInput = editProfilePopup.querySelector("#profile_name");
+  let editProfileSubtitleInput = editProfilePopup.querySelector("#profile_subtitle");
+  profileName = editProfileNameInput.value;
+  profileSubtitle = editProfileSubtitleInput.value;
+  togglePopup(editProfilePopup);
+  render();
+});
 
 //Данная функция вызывается при рендеринге страницы
 function render() {
-    let profileNameEl = document.querySelector(".profile__name");
-    let profileSubtitleEl = document.querySelector(".profile__subtitle");
-    profileNameEl.textContent = profileName;
-    profileSubtitleEl.textContent = profileSubtitle;
-    let editProfileNameInput = editProfilePopup.querySelector("#profile_name");
-    let editProfileSubtitleInput = editProfilePopup.querySelector("#profile_subtitle");
-    editProfileNameInput.value = profileName;
-    editProfileSubtitleInput.value = profileSubtitle;
-    let likeButtons = document.querySelectorAll(".card__like-button");
-    likeButtons.forEach(button => {
-        button.addEventListener("click", function() {
-            button.classList.toggle("card__like-button_active");
-        });
+  let profileNameEl = document.querySelector(".profile__name");
+  let profileSubtitleEl = document.querySelector(".profile__subtitle");
+  profileNameEl.textContent = profileName;
+  profileSubtitleEl.textContent = profileSubtitle;
+  let editProfileNameInput = editProfilePopup.querySelector("#profile_name");
+  let editProfileSubtitleInput = editProfilePopup.querySelector("#profile_subtitle");
+  editProfileNameInput.value = profileName;
+  editProfileSubtitleInput.value = profileSubtitle;
+  let likeButtons = document.querySelectorAll(".card__like-button");
+  likeButtons.forEach(button => {
+    button.addEventListener("click", function() {
+        button.classList.toggle("card__like-button_active");
     });
+  });
 }
 
 render();
