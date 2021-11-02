@@ -47,6 +47,18 @@ initialCards.forEach(card => {
   cardContainer.insertAdjacentHTML("beforeend", getCardHtml(card));
 });
 
+function likeButtonToggle(button) {
+  button.classList.toggle("card__like-button_active");
+}
+
+let cards = cardContainer.querySelectorAll(".card");
+cards.forEach(card => {
+  let likeButton = card.querySelector(".card__like-button");
+  likeButton.addEventListener("click", function(){
+    likeButtonToggle(likeButton);
+  });
+});
+
 function togglePopup(popup) {
   popup.classList.toggle("popup_opened");
 }
@@ -83,12 +95,6 @@ function render() {
   let editProfileSubtitleInput = editProfilePopup.querySelector("#profile_subtitle");
   editProfileNameInput.value = profileName;
   editProfileSubtitleInput.value = profileSubtitle;
-  let likeButtons = document.querySelectorAll(".card__like-button");
-  likeButtons.forEach(button => {
-    button.addEventListener("click", function() {
-        button.classList.toggle("card__like-button_active");
-    });
-  });
 }
 
 render();
