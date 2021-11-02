@@ -86,7 +86,6 @@ editProfileForm.addEventListener("submit", function(evt) {
 
 let addCardButton = document.querySelector(".profile__add-button");
 let addCardPopup = document.querySelector(".popup_type_add-card");
-
 addCardButton.addEventListener("click", function() {
   togglePopup(addCardPopup);
 });
@@ -95,6 +94,24 @@ let addCardCloseButton = addCardPopup.querySelector(".popup__close-button");
 addCardCloseButton.addEventListener("click", function() {
   togglePopup(addCardPopup);
 });
+
+let addCardForm = addCardPopup.querySelector(".popup__container");
+addCardForm.addEventListener("submit", function(evt) {
+  evt.preventDefault();
+  let addCardNameInput = addCardForm.querySelector("#add_card_name");
+  let addCardLinkInput = addCardForm.querySelector("#add_card_link");
+  let card = {
+    name: addCardNameInput.value,
+    link: addCardLinkInput.value,
+  };
+  let cardElement = getCardElement(card);
+  let likeButton = cardElement.querySelector(".card__like-button");
+  likeButton.addEventListener("click", function() {
+    likeButtonToggle(likeButton);
+  })
+  cardContainer.prepend(cardElement);
+  togglePopup(addCardPopup);
+})
 
 //Данная функция вызывается при рендеринге страницы
 function render() {
