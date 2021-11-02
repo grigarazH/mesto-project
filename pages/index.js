@@ -28,23 +28,22 @@ const initialCards = [
 let profileName = document.querySelector(".profile__name").textContent;
 let profileSubtitle = document.querySelector(".profile__subtitle").textContent;
 
-//Принимает объект карточки с параметрами link и name. Возвращает html карточки.
-function getCardHtml(card) {
-  return `
-    <article class="card">
-    <img class="card__image" src="${card.link}" alt="Фотография места ${card.name}">
-    <div class="card__description">
-      <h2 class="card__title">${card.name}</h2>
-      <button type="button" class="card__like-button"></button>
-      </div>
-    </article>
-  `;
+//Принимает объект карточки с параметрами link и name. Возвращает html-элемент карточки.
+function getCardElement(card) {
+  let cardTemplate = document.querySelector("#card_template");
+  let cardElement = cardTemplate.content.firstElementChild.cloneNode(true);
+  let cardImage = cardElement.querySelector(".card__image");
+  let cardDescription = cardElement.querySelector(".card__title");
+  cardImage.src = card.link;
+  cardImage.alt = `Фотография места ${card.name}`;
+  cardDescription.textContent = card.name;
+  return cardElement;
 }
 
 let cardContainer = document.querySelector(".cards");
 
 initialCards.forEach(card => {
-  cardContainer.insertAdjacentHTML("beforeend", getCardHtml(card));
+  cardContainer.appendChild(getCardElement(card));
 });
 
 function likeButtonToggle(button) {
