@@ -25,6 +25,9 @@ const initialCards = [
   }
 ];
 
+let profileName = document.querySelector(".profile__name").textContent;
+let profileSubtitle = document.querySelector(".profile__subtitle").textContent;
+
 //Принимает объект карточки с параметрами link и name. Возвращает html карточки.
 function getCardHtml(card) {
   return `
@@ -61,6 +64,14 @@ editProfileCloseButton.addEventListener("click", function() {
 
 //Данная функция вызывается при рендеринге страницы
 function render() {
+    let profileNameEl = document.querySelector(".profile__name");
+    let profileSubtitleEl = document.querySelector(".profile__subtitle");
+    profileNameEl.textContent = profileName;
+    profileSubtitleEl.textContent = profileSubtitle;
+    let editProfileNameInput = editProfilePopup.querySelector("#profile_name");
+    let editProfileSubtitleInput = editProfilePopup.querySelector("#profile_subtitle");
+    editProfileNameInput.value = profileName;
+    editProfileSubtitleInput.value = profileSubtitle;
     let likeButtons = document.querySelectorAll(".card__like-button");
     likeButtons.forEach(button => {
         button.addEventListener("click", function() {
