@@ -40,8 +40,19 @@
     <form class="popup__container" name="edit_profile">
       <fieldset class="popup__group">
         <legend class="popup__title">Редактировать профиль</legend>
-        <input class="popup__input popup__input_el_name" id="profile_name" name="profile_name" type="text" placeholder="Имя" value="Жак-Ив Кусто">
-        <input class="popup__input popup__input_el_subtitle" id="profile_subtitle" name ="profile_subtitle" type="text" placeholder="Вид деятельности" value="Исследователь океана">
+        <input class="popup__input" id="profile_name" name="profile_name" type="text" placeholder="Имя" value="Жак-Ив Кусто">
+        <input class="popup__input" id="profile_subtitle" name ="profile_subtitle" type="text" placeholder="О себе" value="Исследователь океана">
+        <button class="popup__submit" type="submit">Сохранить</button>
+        <button type="button" class="popup__close-button" id="popup_profile_close"></button>
+      </fieldset>
+    </form>
+  </div>
+  <div class="popup popup_type_add-card">
+    <form class="popup__container" name="add_card">
+      <fieldset class="popup__group">
+        <legend class="popup__title">Новое место</legend>
+        <input class="popup__input" id="add_card_name" name="add_card_name" type="text" placeholder="Название">
+        <input class="popup__input" id="add_card_link" name="add_card_link" type="text" placeholder="Ссылка на картинку">
         <button class="popup__submit" type="submit">Сохранить</button>
         <button type="button" class="popup__close-button" id="popup_profile_close"></button>
       </fieldset>

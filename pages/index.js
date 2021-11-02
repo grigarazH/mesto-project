@@ -84,6 +84,18 @@ editProfileForm.addEventListener("submit", function(evt) {
   render();
 });
 
+let addCardButton = document.querySelector(".profile__add-button");
+let addCardPopup = document.querySelector(".popup_type_add-card");
+
+addCardButton.addEventListener("click", function() {
+  togglePopup(addCardPopup);
+});
+
+let addCardCloseButton = addCardPopup.querySelector(".popup__close-button");
+addCardCloseButton.addEventListener("click", function() {
+  togglePopup(addCardPopup);
+});
+
 //Данная функция вызывается при рендеринге страницы
 function render() {
   let profileNameEl = document.querySelector(".profile__name");
