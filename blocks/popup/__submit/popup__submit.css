@@ -10,6 +10,7 @@
   border: none;
   border-radius: 2px;
   transition: opacity .3s linear .2s;
+  margin-top: 48px;
 }
 
 .popup__submit:hover {
