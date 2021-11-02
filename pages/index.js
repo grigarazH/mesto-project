@@ -37,6 +37,8 @@ const addCardButton = document.querySelector(".profile__add-button");
 const addCardPopup = document.querySelector(".popup_type_add-card");
 const addCardCloseButton = addCardPopup.querySelector(".popup__close-button");
 const addCardForm = addCardPopup.querySelector(".popup__container");
+const photoPopup = document.querySelector(".popup_type_photo");
+const photoPopupImage = document.querySelector(".popup__photo");
 const profileNameEl = document.querySelector(".profile__name");
 const profileSubtitleEl = document.querySelector(".profile__subtitle");
 const addCardNameInput = addCardForm.querySelector("#add_card_name");
@@ -52,6 +54,10 @@ function getCardElement(card) {
   const cardDescription = cardElement.querySelector(".card__title");
   cardImage.src = card.link;
   cardImage.alt = `Фотография места ${card.name}`;
+  cardImage.addEventListener("click", function() {
+
+    togglePopup(photoPopup);
+  });
   cardDescription.textContent = card.name;
   return cardElement;
 }

@@ -40,26 +40,32 @@
     <p class="footer__copyright">&copy; 2021 Mesto Russia</p>
   </footer>
   <div class="popup popup_type_edit-profile">
-    <form class="popup__container" name="edit_profile">
+    <form class="popup__container popup__container_type_form" name="edit_profile">
       <fieldset class="popup__group">
         <legend class="popup__title">Редактировать профиль</legend>
         <input class="popup__input" id="edit_profile_name" name="edit_profile_name" type="text" placeholder="Имя" value="Жак-Ив Кусто">
         <input class="popup__input" id="edit_profile_subtitle" name ="edit_profile_subtitle" type="text" placeholder="О себе" value="Исследователь океана">
         <button class="popup__submit" type="submit">Сохранить</button>
-        <button type="button" class="popup__close-button" id="popup_profile_close"></button>
+        <button type="button" class="popup__close-button popup__close-button_type_form" id="popup_profile_close"></button>
       </fieldset>
     </form>
   </div>
   <div class="popup popup_type_add-card">
-    <form class="popup__container" name="add_card">
+    <form class="popup__container popup__container_type_form" name="add_card">
       <fieldset class="popup__group">
         <legend class="popup__title">Новое место</legend>
         <input class="popup__input" id="add_card_name" name="add_card_name" type="text" placeholder="Название">
         <input class="popup__input" id="add_card_link" name="add_card_link" type="text" placeholder="Ссылка на картинку">
         <button class="popup__submit" type="submit">Сохранить</button>
-        <button type="button" class="popup__close-button" id="popup_profile_close"></button>
+        <button type="button" class="popup__close-button popup__close-button_type_form" id="popup_profile_close"></button>
       </fieldset>
     </form>
+  </div>
+  <div class="popup popup_type_photo">
+    <figure class="popup__container popup__container_type_photo">
+      <img class="popup__photo" src="#" alt="Фотография места">
+      <figcaption class="popup__photo-caption">Наименование места</figcaption>
+    </figure>
   </div>
   <script src="pages/index.js"></script>
 </body>
