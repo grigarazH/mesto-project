@@ -44,6 +44,21 @@ initialCards.forEach(card => {
   cardContainer.insertAdjacentHTML("beforeend", getCardHtml(card));
 });
 
+function togglePopup(popup) {
+  popup.classList.toggle("popup_opened");
+}
+
+let editProfileButton = document.querySelector(".profile__edit-button");
+let editProfilePopup = document.querySelector(".popup_type_edit-profile");
+
+editProfileButton.addEventListener("click", function() {
+  togglePopup(editProfilePopup);
+});
+let editProfileCloseButton = editProfilePopup.querySelector(".popup__close-button");
+editProfileCloseButton.addEventListener("click", function() {
+  togglePopup(editProfilePopup);
+});
+
 //Данная функция вызывается при рендеринге страницы
 function render() {
     let likeButtons = document.querySelectorAll(".card__like-button");
