@@ -45,7 +45,7 @@ const addCardLinkInput = addCardForm.querySelector("#add_card_link");
 let profileName = document.querySelector(".profile__name").textContent;
 let profileSubtitle = document.querySelector(".profile__subtitle").textContent;
 
-//Принимает объект карточки с параметрами link и name. Возвращает html-элемент карточки.
+// Принимает объект карточки с параметрами link и name. Возвращает html-элемент карточки.
 function getCardElement(card) {
   const cardElement = cardTemplate.content.firstElementChild.cloneNode(true);
   const cardImage = cardElement.querySelector(".card__image");
@@ -56,6 +56,7 @@ function getCardElement(card) {
   return cardElement;
 }
 
+
 function likeButtonToggle(button) {
   button.classList.toggle("card__like-button_active");
 }
@@ -64,7 +65,7 @@ function togglePopup(popup) {
   popup.classList.toggle("popup_opened");
 }
 
-//Данная функция вызывается при рендеринге страницы
+// Данная функция вызывается при рендеринге страницы
 function render() {
   profileNameEl.textContent = profileName;
   profileSubtitleEl.textContent = profileSubtitle;
@@ -80,6 +81,10 @@ cards.forEach(card => {
   likeButton.addEventListener("click", function(){
     likeButtonToggle(likeButton);
   });
+  const deleteButton = card.querySelector(".card__delete-button");
+  deleteButton.addEventListener("click", function(){
+    card.remove();
+  })
 });
 
 editProfileButton.addEventListener("click", function() {
