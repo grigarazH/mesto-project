@@ -29,6 +29,7 @@
           <h2 class="card__title">Наименование места</h2>
           <button type="button" class="card__like-button"></button>
           </div>
+          <button type="button" class="card__delete-button"></button>
         </article>
       </template>
     </section>
@@ -40,8 +41,8 @@
     <form class="popup__container" name="edit_profile">
       <fieldset class="popup__group">
         <legend class="popup__title">Редактировать профиль</legend>
-        <input class="popup__input" id="profile_name" name="profile_name" type="text" placeholder="Имя" value="Жак-Ив Кусто">
-        <input class="popup__input" id="profile_subtitle" name ="profile_subtitle" type="text" placeholder="О себе" value="Исследователь океана">
+        <input class="popup__input" id="edit_profile_name" name="edit_profile_name" type="text" placeholder="Имя" value="Жак-Ив Кусто">
+        <input class="popup__input" id="edit_profile_subtitle" name ="edit_profile_subtitle" type="text" placeholder="О себе" value="Исследователь океана">
         <button class="popup__submit" type="submit">Сохранить</button>
         <button type="button" class="popup__close-button" id="popup_profile_close"></button>
       </fieldset>
