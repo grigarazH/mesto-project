@@ -67,13 +67,13 @@ function getCardElement(card) {
     console.log(photoPopupImage.clientHeight);
     console.log(window.innerHeight * 0.75);
   });
-  const likeButton = card.querySelector(".card__like-button");
+  const likeButton = cardElement.querySelector(".card__like-button");
   likeButton.addEventListener("click", function(){
     toggleLikeButton(likeButton);
   });
-  const deleteButton = card.querySelector(".card__delete-button");
+  const deleteButton = cardElement.querySelector(".card__delete-button");
   deleteButton.addEventListener("click", function(){
-    card.remove();
+    cardElement.remove();
   });
   cardTitle.textContent = card.name;
   return cardElement;
