@@ -25,7 +25,7 @@ const initialCards = [
   }
 ];
 
-//Общее время перехода в мс
+// Общее время перехода в мс
 const popupTransitionLength = 700;
 
 const cardContainer = document.querySelector(".cards");
@@ -79,21 +79,30 @@ function getCardElement(card) {
   return cardElement;
 }
 
-
+// Изменяет состояние кнопки лайка
 function toggleLikeButton(button) {
   button.classList.toggle("card__like-button_active");
 }
 
+// Изменяет состояние попапа
 function togglePopup(popup) {
   popup.classList.toggle("popup_opened");
 }
 
-// Данная функция вызывается при рендеринге страницы
-function render() {
-  profileNameEl.textContent = profileName;
-  profileSubtitleEl.textContent = profileSubtitle;
+// Сброс значений полей ввода в попапе редактирования профиля
+function resetProfileInputs() {
   editProfileNameInput.value = profileName;
   editProfileSubtitleInput.value = profileSubtitle;
+}
+
+// Обновление имени и вида деятельности в профиле
+function updateProfile() {
+  profileNameEl.textContent = profileName;
+  profileSubtitleEl.textContent = profileSubtitle;
+}
+
+// Сброс значений полей ввода в попапе добавления карточки
+function resetAddCardInputs() {
   addCardNameInput.value = "";
   addCardLinkInput.value = "";
 }
@@ -106,9 +115,8 @@ editProfileButton.addEventListener("click", function() {
 
 editProfileCloseButton.addEventListener("click", function() {
   togglePopup(editProfilePopup);
-  // Сброс значения полей ввода. Из за перехода вызывается с задержкой.
   setTimeout(function() {
-    render();
+    resetProfileInputs();
   }, popupTransitionLength);
 });
 
@@ -126,7 +134,7 @@ addCardButton.addEventListener("click", function() {
 addCardCloseButton.addEventListener("click", function() {
   togglePopup(addCardPopup);
   setTimeout(function() {
-    render();
+    resetAddCardInputs();
   }, popupTransitionLength);
 });
 
