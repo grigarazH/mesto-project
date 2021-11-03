@@ -25,6 +25,9 @@ const initialCards = [
   }
 ];
 
+//Общее время перехода в мс
+const popupTransitionLength = 700;
+
 const cardContainer = document.querySelector(".cards");
 const editProfileButton = document.querySelector(".profile__edit-button");
 const editProfilePopup = document.querySelector(".popup_type_edit-profile");
@@ -83,6 +86,8 @@ function render() {
   profileSubtitleEl.textContent = profileSubtitle;
   editProfileNameInput.value = profileName;
   editProfileSubtitleInput.value = profileSubtitle;
+  addCardNameInput.value = "";
+  addCardLinkInput.value = "";
 }
 
 initialCards.forEach(card => cardContainer.append(getCardElement(card)));
@@ -105,6 +110,10 @@ editProfileButton.addEventListener("click", function() {
 
 editProfileCloseButton.addEventListener("click", function() {
   togglePopup(editProfilePopup);
+  // Сброс значения полей ввода. Из за перехода вызывается с задержкой.
+  setTimeout(function() {
+    render();
+  }, popupTransitionLength);
 });
 
 editProfileForm.addEventListener("submit", function(evt) {
@@ -112,7 +121,6 @@ editProfileForm.addEventListener("submit", function(evt) {
   profileName = editProfileNameInput.value;
   profileSubtitle = editProfileSubtitleInput.value;
   togglePopup(editProfilePopup);
-  render();
 });
 
 addCardButton.addEventListener("click", function() {
@@ -121,6 +129,9 @@ addCardButton.addEventListener("click", function() {
 
 addCardCloseButton.addEventListener("click", function() {
   togglePopup(addCardPopup);
+  setTimeout(function() {
+    render();
+  }, popupTransitionLength);
 });
 
 addCardForm.addEventListener("submit", function(evt) {
@@ -140,6 +151,6 @@ addCardForm.addEventListener("submit", function(evt) {
 
 photoPopupCloseButton.addEventListener("click", function() {
   togglePopup(photoPopup);
-})
+});
 
 render();
