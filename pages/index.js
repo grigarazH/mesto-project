@@ -67,12 +67,20 @@ function getCardElement(card) {
     console.log(photoPopupImage.clientHeight);
     console.log(window.innerHeight * 0.75);
   });
+  const likeButton = card.querySelector(".card__like-button");
+  likeButton.addEventListener("click", function(){
+    toggleLikeButton(likeButton);
+  });
+  const deleteButton = card.querySelector(".card__delete-button");
+  deleteButton.addEventListener("click", function(){
+    card.remove();
+  });
   cardTitle.textContent = card.name;
   return cardElement;
 }
 
 
-function likeButtonToggle(button) {
+function toggleLikeButton(button) {
   button.classList.toggle("card__like-button_active");
 }
 
@@ -91,18 +99,6 @@ function render() {
 }
 
 initialCards.forEach(card => cardContainer.append(getCardElement(card)));
-
-const cards = cardContainer.querySelectorAll(".card");
-cards.forEach(card => {
-  const likeButton = card.querySelector(".card__like-button");
-  likeButton.addEventListener("click", function(){
-    likeButtonToggle(likeButton);
-  });
-  const deleteButton = card.querySelector(".card__delete-button");
-  deleteButton.addEventListener("click", function(){
-    card.remove();
-  })
-});
 
 editProfileButton.addEventListener("click", function() {
   togglePopup(editProfilePopup);
@@ -141,10 +137,6 @@ addCardForm.addEventListener("submit", function(evt) {
     link: addCardLinkInput.value,
   };
   const cardElement = getCardElement(card);
-  const likeButton = cardElement.querySelector(".card__like-button");
-  likeButton.addEventListener("click", function() {
-    likeButtonToggle(likeButton);
-  })
   cardContainer.prepend(cardElement);
   togglePopup(addCardPopup);
 });
