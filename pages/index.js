@@ -136,6 +136,10 @@ addCardForm.addEventListener("submit", function(evt) {
   })
   cardContainer.prepend(cardElement);
   togglePopup(addCardPopup);
+});
+
+photoPopupCloseButton.addEventListener("click", function() {
+  togglePopup(photoPopup);
 })
 
 render();
