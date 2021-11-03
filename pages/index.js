@@ -153,4 +153,4 @@ photoPopupCloseButton.addEventListener("click", function() {
   togglePopup(photoPopup);
 });
 
-render();
+updateProfile();
