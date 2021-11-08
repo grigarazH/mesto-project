@@ -20,7 +20,7 @@ const addCardNameInput = addCardForm.querySelector("#add_card_name");
 const addCardLinkInput = addCardForm.querySelector("#add_card_link");
 
 // Принимает объект карточки с параметрами link и name. Возвращает html-элемент карточки.
-function getCardElement(card) {
+function createCardElement(card) {
   const cardElement = cardTemplate.content.firstElementChild.cloneNode(true);
   const cardImage = cardElement.querySelector(".card__image");
   const cardImageContainer = cardElement.querySelector(".card__image-container")
