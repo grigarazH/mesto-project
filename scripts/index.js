@@ -54,12 +54,25 @@ function togglePopup(popup) {
   popup.classList.toggle("popup_opened");
 }
 
-// Обработчик отправки формы редактирования формы.
+// Обработчик отправки формы редактирования профиля
 function submitEditProfileForm(event) {
   event.preventDefault();
   profileNameEl.textContent = editProfileNameInput.value;
   profileSubtitleEl.textContent = editProfileSubtitleInput.value;
   togglePopup(editProfilePopup);
+}
+
+// Обработчик отправки формы добавления карточки
+function submitAddCardForm(event) {
+  event.preventDefault();
+  const card = {
+    name: addCardNameInput.value,
+    link: addCardLinkInput.value,
+  };
+  const cardElement = createCardElement(card);
+  cardContainer.prepend(cardElement);
+  addCardForm.reset();
+  togglePopup(addCardPopup);
 }
 
 initialCards.forEach(card => cardContainer.append(createCardElement(card)));
@@ -86,17 +99,7 @@ addCardCloseButton.addEventListener("click", function() {
   togglePopup(addCardPopup);
 });
 
-addCardForm.addEventListener("submit", function(evt) {
-  evt.preventDefault();
-  const card = {
-    name: addCardNameInput.value,
-    link: addCardLinkInput.value,
-  };
-  const cardElement = createCardElement(card);
-  cardContainer.prepend(cardElement);
-  addCardForm.reset();
-  togglePopup(addCardPopup);
-});
+addCardForm.addEventListener("submit", submitAddCardForm);
 
 photoPopupCloseButton.addEventListener("click", function() {
   togglePopup(photoPopup);
