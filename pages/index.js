@@ -49,9 +49,6 @@ const profileSubtitleEl = document.querySelector(".profile__subtitle");
 const addCardNameInput = addCardForm.querySelector("#add_card_name");
 const addCardLinkInput = addCardForm.querySelector("#add_card_link");
 
-let profileName = document.querySelector(".profile__name").textContent;
-let profileSubtitle = document.querySelector(".profile__subtitle").textContent;
-
 // Принимает объект карточки с параметрами link и name. Возвращает html-элемент карточки.
 function getCardElement(card) {
   const cardElement = cardTemplate.content.firstElementChild.cloneNode(true);
@@ -89,43 +86,27 @@ function togglePopup(popup) {
   popup.classList.toggle("popup_opened");
 }
 
-// Сброс значений полей ввода в попапе редактирования профиля
-function resetProfileInputs() {
-  editProfileNameInput.value = profileName;
-  editProfileSubtitleInput.value = profileSubtitle;
-}
-
-// Обновление имени и вида деятельности в профиле
-function updateProfile() {
-  profileNameEl.textContent = profileName;
-  profileSubtitleEl.textContent = profileSubtitle;
-}
-
-// Сброс значений полей ввода в попапе добавления карточки
-function resetAddCardInputs() {
-  addCardNameInput.value = "";
-  addCardLinkInput.value = "";
+// Обработчик отправки формы редактирования формы.
+function submitEditProfileForm(event) {
+  event.preventDefault();
+  profileNameEl.textContent = editProfileNameInput.value;
+  profileSubtitleEl.textContent = editProfileSubtitleInput.value;
+  togglePopup(editProfilePopup);
 }
 
 initialCards.forEach(card => cardContainer.append(getCardElement(card)));
 
 editProfileButton.addEventListener("click", function() {
   togglePopup(editProfilePopup);
+  editProfileNameInput.value = profileNameEl.textContent;
+  editProfileSubtitleInput = profileSubtitleEl.textContent;
 });
 
 editProfileCloseButton.addEventListener("click", function() {
   togglePopup(editProfilePopup);
-  setTimeout(function() {
-    resetProfileInputs();
-  }, popupTransitionLength);
 });
 
-editProfileForm.addEventListener("submit", function(evt) {
-  evt.preventDefault();
-  profileName = editProfileNameInput.value;
-  profileSubtitle = editProfileSubtitleInput.value;
-  togglePopup(editProfilePopup);
-});
+editProfileForm.addEventListener("submit", submitEditProfileForm);
 
 addCardButton.addEventListener("click", function() {
   togglePopup(addCardPopup);
