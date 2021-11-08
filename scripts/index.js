@@ -1,33 +1,3 @@
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
-// Общее время перехода в мс
-const popupTransitionLength = 700;
-
 const cardContainer = document.querySelector(".cards");
 const editProfileButton = document.querySelector(".profile__edit-button");
 const editProfilePopup = document.querySelector(".popup_type_edit-profile");
@@ -95,6 +65,8 @@ function submitEditProfileForm(event) {
 }
 
 initialCards.forEach(card => cardContainer.append(getCardElement(card)));
+profileNameEl.textContent = initialProfileData.name;
+profileSubtitleEl.textContent = initialProfileData.subtitle;
 
 editProfileButton.addEventListener("click", function() {
   togglePopup(editProfilePopup);
@@ -114,9 +86,6 @@ addCardButton.addEventListener("click", function() {
 
 addCardCloseButton.addEventListener("click", function() {
   togglePopup(addCardPopup);
-  setTimeout(function() {
-    resetAddCardInputs();
-  }, popupTransitionLength);
 });
 
 addCardForm.addEventListener("submit", function(evt) {
@@ -127,6 +96,7 @@ addCardForm.addEventListener("submit", function(evt) {
   };
   const cardElement = getCardElement(card);
   cardContainer.prepend(cardElement);
+  addCardForm.reset();
   togglePopup(addCardPopup);
 });
 
