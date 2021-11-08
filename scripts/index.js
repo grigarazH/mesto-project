@@ -62,7 +62,7 @@ function submitEditProfileForm(event) {
   togglePopup(editProfilePopup);
 }
 
-initialCards.forEach(card => cardContainer.append(getCardElement(card)));
+initialCards.forEach(card => cardContainer.append(createCardElement(card)));
 profileNameEl.textContent = initialProfileData.name;
 profileSubtitleEl.textContent = initialProfileData.subtitle;
 
@@ -92,7 +92,7 @@ addCardForm.addEventListener("submit", function(evt) {
     name: addCardNameInput.value,
     link: addCardLinkInput.value,
   };
-  const cardElement = getCardElement(card);
+  const cardElement = createCardElement(card);
   cardContainer.prepend(cardElement);
   addCardForm.reset();
   togglePopup(addCardPopup);
