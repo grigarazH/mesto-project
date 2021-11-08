@@ -31,8 +31,6 @@ function createCardElement(card) {
     photoPopupImage.src = card.link;
     photoPopupCaption.textContent = card.name;
     togglePopup(photoPopup);
-    console.log(photoPopupImage.clientHeight);
-    console.log(window.innerHeight * 0.75);
   });
   const likeButton = cardElement.querySelector(".card__like-button");
   likeButton.addEventListener("click", function(){
