@@ -101,5 +101,3 @@ addCardForm.addEventListener("submit", function(evt) {
 photoPopupCloseButton.addEventListener("click", function() {
   togglePopup(photoPopup);
 });
-
-updateProfile();
