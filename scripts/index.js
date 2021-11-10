@@ -29,6 +29,7 @@ function createCardElement(card) {
   cardImage.alt = `Фотография места ${card.name}`;
   cardImageContainer.addEventListener("click", function() {
     photoPopupImage.src = card.link;
+    photoPopupImage.alt = card.name;
     photoPopupCaption.textContent = card.name;
     togglePopup(photoPopup);
   });
