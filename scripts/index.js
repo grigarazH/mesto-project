@@ -82,7 +82,7 @@ profileSubtitleEl.textContent = initialProfileData.subtitle;
 editProfileButton.addEventListener("click", function() {
   togglePopup(editProfilePopup);
   editProfileNameInput.value = profileNameEl.textContent;
-  editProfileSubtitleInput = profileSubtitleEl.textContent;
+  editProfileSubtitleInput.value = profileSubtitleEl.textContent;
 });
 
 editProfileCloseButton.addEventListener("click", function() {
