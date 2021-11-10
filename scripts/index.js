@@ -77,8 +77,6 @@ function submitAddCardForm(event) {
 }
 
 initialCards.forEach(card => cardContainer.append(createCardElement(card)));
-profileNameEl.textContent = initialProfileData.name;
-profileSubtitleEl.textContent = initialProfileData.subtitle;
 
 editProfileButton.addEventListener("click", function() {
   togglePopup(editProfilePopup);
