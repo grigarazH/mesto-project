@@ -20,25 +20,25 @@ const addCardNameInput = addCardForm.querySelector("#add_card_name");
 const addCardLinkInput = addCardForm.querySelector("#add_card_link");
 
 // Принимает объект карточки с параметрами link и name. Возвращает html-элемент карточки.
-function createCardElement(card) {
+const createCardElement = card => {
   const cardElement = cardTemplate.content.firstElementChild.cloneNode(true);
   const cardImage = cardElement.querySelector(".card__image");
   const cardImageContainer = cardElement.querySelector(".card__image-container")
   const cardTitle = cardElement.querySelector(".card__title");
   cardImage.src = card.link;
   cardImage.alt = `Фотография места ${card.name}`;
-  cardImageContainer.addEventListener("click", function() {
+  cardImageContainer.addEventListener("click", () => {
     photoPopupImage.src = card.link;
     photoPopupImage.alt = card.name;
     photoPopupCaption.textContent = card.name;
-    togglePopup(photoPopup);
+    openPopup(photoPopup);
   });
   const likeButton = cardElement.querySelector(".card__like-button");
-  likeButton.addEventListener("click", function(){
+  likeButton.addEventListener("click", () => {
     toggleLikeButton(likeButton);
   });
   const deleteButton = cardElement.querySelector(".card__delete-button");
-  deleteButton.addEventListener("click", function(){
+  deleteButton.addEventListener("click", () => {
     cardElement.remove();
   });
   cardTitle.textContent = card.name;
@@ -46,25 +46,24 @@ function createCardElement(card) {
 }
 
 // Изменяет состояние кнопки лайка
-function toggleLikeButton(button) {
+const toggleLikeButton = button => {
   button.classList.toggle("card__like-button_active");
 }
 
-// Изменяет состояние попапа
-function togglePopup(popup) {
-  popup.classList.toggle("popup_opened");
-}
+const openPopup = popup => popup.classList.add("popup_opened");
+
+const closePopup = popup => popup.classList.remove("popup_opened");
 
 // Обработчик отправки формы редактирования профиля
-function submitEditProfileForm(event) {
+const submitEditProfileForm = event => {
   event.preventDefault();
   profileNameEl.textContent = editProfileNameInput.value;
   profileSubtitleEl.textContent = editProfileSubtitleInput.value;
-  togglePopup(editProfilePopup);
+  closePopup(editProfilePopup);
 }
 
 // Обработчик отправки формы добавления карточки
-function submitAddCardForm(event) {
+const submitAddCardForm = event => {
   event.preventDefault();
   const card = {
     name: addCardNameInput.value,
@@ -73,33 +72,33 @@ function submitAddCardForm(event) {
   const cardElement = createCardElement(card);
   cardContainer.prepend(cardElement);
   addCardForm.reset();
-  togglePopup(addCardPopup);
+  closePopup(addCardPopup);
 }
 
 initialCards.forEach(card => cardContainer.append(createCardElement(card)));
 
-editProfileButton.addEventListener("click", function() {
-  togglePopup(editProfilePopup);
+editProfileButton.addEventListener("click", () => {
+  openPopup(editProfilePopup);
   editProfileNameInput.value = profileNameEl.textContent;
   editProfileSubtitleInput.value = profileSubtitleEl.textContent;
 });
 
-editProfileCloseButton.addEventListener("click", function() {
-  togglePopup(editProfilePopup);
+editProfileCloseButton.addEventListener("click", () => {
+  closePopup(editProfilePopup);
 });
 
 editProfileForm.addEventListener("submit", submitEditProfileForm);
 
-addCardButton.addEventListener("click", function() {
-  togglePopup(addCardPopup);
+addCardButton.addEventListener("click", () => {
+  openPopup(addCardPopup);
 });
 
-addCardCloseButton.addEventListener("click", function() {
-  togglePopup(addCardPopup);
+addCardCloseButton.addEventListener("click", () => {
+  closePopup(addCardPopup);
 });
 
 addCardForm.addEventListener("submit", submitAddCardForm);
 
-photoPopupCloseButton.addEventListener("click", function() {
-  togglePopup(photoPopup);
+photoPopupCloseButton.addEventListener("click", () => {
+  closePopup(photoPopup);
 });
