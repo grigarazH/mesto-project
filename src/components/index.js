@@ -46,7 +46,10 @@ const submitAddCardForm = event => {
 
 initialCards.forEach(card => cardContainer.append(createCardElement(card)));
 
-editProfileButton.addEventListener("click", () => {
+editProfileButton.addEventListener("mousedown", e => e.preventDefault());
+addCardButton.addEventListener("mousedown", e => e.preventDefault());
+
+editProfileButton.addEventListener("click", e => {
   openPopup(editProfilePopup);
   editProfileNameInput.value = profileNameEl.textContent;
   editProfileSubtitleInput.value = profileSubtitleEl.textContent;
@@ -59,7 +62,7 @@ editProfileCloseButton.addEventListener("click", () => {
 
 editProfileForm.addEventListener("submit", submitEditProfileForm);
 
-addCardButton.addEventListener("click", () => {
+addCardButton.addEventListener("click",e  => {
   openPopup(addCardPopup);
 });
 
@@ -73,11 +76,19 @@ photoPopupCloseButton.addEventListener("click", () => {
   closePopup(photoPopup);
 });
 
-popups.forEach(popup => popup.addEventListener("click", e => {
-  console.log(e.target);
-  if(e.target.classList.contains("popup")) {
-    closePopup(popup);
-  }
-}));
+popups.forEach(popup => {
+  popup.addEventListener("click", e => {
+    if(e.target.classList.contains("popup")) {
+      closePopup(popup);
+    }
+  });
+  popup.addEventListener("keydown", e => {
+    console.log(e.key);
+    if(e.key === "Escape"){
+      closePopup(popup);
+    }
+  });
+});
+
 
 enableValidation(validationConfig);
