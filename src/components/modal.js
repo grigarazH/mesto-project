@@ -1,5 +1,5 @@
 import {validateForm} from "./validate";
-import {validationConfig} from "./utils";
+import {validationConfig} from "./constants";
 import {cardContainer, createCardElement} from "./card";
 
 const photoPopup = document.querySelector(".popup_type_photo");

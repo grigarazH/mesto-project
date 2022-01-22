@@ -9,7 +9,7 @@ import {
   popups, addCardForm, submitAddCardForm
 } from "./modal";
 import {createCardElement} from "./card";
-import {validationConfig} from "./utils";
+import {validationConfig} from "./constants";
 import {enableValidation} from "./validate";
 
 const editProfileButton = document.querySelector(".profile__edit-button");
