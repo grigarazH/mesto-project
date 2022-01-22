@@ -17,11 +17,21 @@ const editProfileSubtitleInput = editProfilePopup.querySelector("#edit-profile-s
 const addCardNameInput = addCardForm.querySelector("#add-card-name");
 const addCardLinkInput = addCardForm.querySelector("#add-card-link");
 
+const popupOnEscHandler = event => {
+  const openedPopup = document.querySelector(".popup_opened");
+  if(event.key === "Escape") {
+    closePopup(openedPopup);
+  }
+}
+
 export const openPopup = popup => {
   popup.classList.add("popup_opened");
-  setTimeout(() => popup.focus(), 400);
+  document.addEventListener("keydown", popupOnEscHandler);
 }
-export const closePopup = popup => popup.classList.remove("popup_opened");
+export const closePopup = popup => {
+  popup.classList.remove("popup_opened");
+  document.removeEventListener("keydown", popupOnEscHandler);
+}
 
 export const openPhotoPopup = card => {
   photoPopupImage.src = card.link;

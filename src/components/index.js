@@ -49,12 +49,6 @@ Object.keys(popups).forEach(popup => {
       closePopup(popups[popup]);
     }
   });
-  popups[popup].addEventListener("keydown", e => {
-    console.log(e.key);
-    if(e.key === "Escape"){
-      closePopup(popups[popup]);
-    }
-  });
 });
 
 
