@@ -21,6 +21,7 @@ const profileSubtitleEl = document.querySelector(".profile__subtitle");
 const addCardNameInput = addCardForm.querySelector("#add-card-name");
 const addCardLinkInput = addCardForm.querySelector("#add-card-link");
 const photoPopupCloseButton = photoPopup.querySelector(".popup__close-button");
+const popups = [editProfilePopup, addCardPopup, photoPopup];
 
 // Обработчик отправки формы редактирования профиля
 const submitEditProfileForm = event => {
@@ -71,5 +72,12 @@ addCardForm.addEventListener("submit", submitAddCardForm);
 photoPopupCloseButton.addEventListener("click", () => {
   closePopup(photoPopup);
 });
+
+popups.forEach(popup => popup.addEventListener("click", e => {
+  console.log(e.target);
+  if(e.target.classList.contains("popup")) {
+    closePopup(popup);
+  }
+}));
 
 enableValidation(validationConfig);
