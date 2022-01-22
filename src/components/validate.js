@@ -1,10 +1,11 @@
+// Функция отображения ошибки валидации поля
 const showInputError = (formElement, inputElement, errorMessage, {inputErrorClass, errorClass, ...config}) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.add(inputErrorClass);
   errorElement.textContent = errorMessage;
   errorElement.classList.add(errorClass);
 }
-
+// Функция скрытия ошибки валидации поля
 const hideInputError = (formElement, inputElement, {inputErrorClass, errorClass, ...config}) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.remove(inputErrorClass);
@@ -12,6 +13,7 @@ const hideInputError = (formElement, inputElement, {inputErrorClass, errorClass,
   errorElement.textContent = '';
 }
 
+//Функция проверки валидности поля ввода
 const checkInputValidity =  (formElement, inputElement, config) => {
   if(!inputElement.validity.valid) {
     showInputError(formElement, inputElement, inputElement.validationMessage, config);
@@ -20,8 +22,10 @@ const checkInputValidity =  (formElement, inputElement, config) => {
   }
 };
 
+// Функция проверки списка полей ввода на наличие невалидных полей
 const hasInvalidInput = inputList => inputList.some(input => !input.validity.valid);
 
+// Функция переключения состояния кнопки отправки формы в зависимости от валидности полей формы
 const toggleButtonState = (inputList, buttonElement) => {
   console.log(inputList);
   if(hasInvalidInput(inputList)) {
@@ -31,6 +35,7 @@ const toggleButtonState = (inputList, buttonElement) => {
   }
 }
 
+// Функция установки обработчиков события для полей ввода формы
 const setEventListeners = (formElement, {inputSelector, submitButtonSelector, ...config}) => {
   const inputList = Array.from(formElement.querySelectorAll(inputSelector));
   const buttonElement = formElement.querySelector(submitButtonSelector);

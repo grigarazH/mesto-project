@@ -1,3 +1,4 @@
+//Объект конфигурации валидации форм
 export const validationConfig = {
   formSelector: '.popup__container_type_form',
   inputSelector: '.popup__input',

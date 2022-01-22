@@ -1,91 +1,58 @@
-import {initialCards} from './card';
+import {cardContainer, initialCards} from './card';
 import '../pages/index.css';
-import {openPopup, closePopup, photoPopup} from "./popup";
+import {
+  openPopup,
+  closePopup,
+  editProfileForm,
+  submitEditProfileForm,
+  editProfileButtonClick,
+  popups, addCardForm, submitAddCardForm
+} from "./modal";
 import {createCardElement} from "./card";
 import {validationConfig} from "./utils";
-import {enableValidation, validateForm} from "./validate";
+import {enableValidation} from "./validate";
 
-const cardContainer = document.querySelector(".cards");
 const editProfileButton = document.querySelector(".profile__edit-button");
-const editProfilePopup = document.querySelector(".popup_type_edit-profile");
-const editProfileCloseButton = editProfilePopup.querySelector(".popup__close-button");
-const editProfileForm = editProfilePopup.querySelector(".popup__container");
-const editProfileNameInput = editProfilePopup.querySelector("#edit-profile-name");
-const editProfileSubtitleInput = editProfilePopup.querySelector("#edit-profile-subtitle");
 const addCardButton = document.querySelector(".profile__add-button");
-const addCardPopup = document.querySelector(".popup_type_add-card");
-const addCardCloseButton = addCardPopup.querySelector(".popup__close-button");
-const addCardForm = addCardPopup.querySelector(".popup__container");
-const profileNameEl = document.querySelector(".profile__name");
-const profileSubtitleEl = document.querySelector(".profile__subtitle");
-const addCardNameInput = addCardForm.querySelector("#add-card-name");
-const addCardLinkInput = addCardForm.querySelector("#add-card-link");
-const photoPopupCloseButton = photoPopup.querySelector(".popup__close-button");
-const popups = [editProfilePopup, addCardPopup, photoPopup];
-
-// Обработчик отправки формы редактирования профиля
-const submitEditProfileForm = event => {
-  event.preventDefault();
-  profileNameEl.textContent = editProfileNameInput.value;
-  profileSubtitleEl.textContent = editProfileSubtitleInput.value;
-  closePopup(editProfilePopup);
-}
-
-// Обработчик отправки формы добавления карточки
-const submitAddCardForm = event => {
-  event.preventDefault();
-  const card = {
-    name: addCardNameInput.value,
-    link: addCardLinkInput.value,
-  };
-  const cardElement = createCardElement(card);
-  cardContainer.prepend(cardElement);
-  addCardForm.reset();
-  closePopup(addCardPopup);
-}
+const addCardCloseButton = popups.addCardPopup.querySelector(".popup__close-button");
+const photoPopupCloseButton = popups.photoPopup.querySelector(".popup__close-button");
+const editProfileCloseButton = popups.editProfilePopup.querySelector(".popup__close-button");
 
 initialCards.forEach(card => cardContainer.append(createCardElement(card)));
 
 editProfileButton.addEventListener("mousedown", e => e.preventDefault());
 addCardButton.addEventListener("mousedown", e => e.preventDefault());
 
-editProfileButton.addEventListener("click", e => {
-  openPopup(editProfilePopup);
-  editProfileNameInput.value = profileNameEl.textContent;
-  editProfileSubtitleInput.value = profileSubtitleEl.textContent;
-  validateForm(editProfileForm, validationConfig);
-});
+editProfileButton.addEventListener("click", editProfileButtonClick);
 
-editProfileCloseButton.addEventListener("click", () => {
-  closePopup(editProfilePopup);
-});
+editProfileCloseButton.addEventListener("click", () => closePopup(popups.editProfilePopup));
 
 editProfileForm.addEventListener("submit", submitEditProfileForm);
 
-addCardButton.addEventListener("click",e  => {
-  openPopup(addCardPopup);
+addCardButton.addEventListener("click",()  => {
+  openPopup(popups.addCardPopup);
 });
 
 addCardCloseButton.addEventListener("click", () => {
-  closePopup(addCardPopup);
+  closePopup(popups.addCardPopup);
 });
 
 addCardForm.addEventListener("submit", submitAddCardForm);
 
 photoPopupCloseButton.addEventListener("click", () => {
-  closePopup(photoPopup);
+  closePopup(popups.photoPopup);
 });
 
-popups.forEach(popup => {
-  popup.addEventListener("click", e => {
+Object.keys(popups).forEach(popup => {
+  popups[popup].addEventListener("click", e => {
     if(e.target.classList.contains("popup")) {
-      closePopup(popup);
+      closePopup(popups[popup]);
     }
   });
-  popup.addEventListener("keydown", e => {
+  popups[popup].addEventListener("keydown", e => {
     console.log(e.key);
     if(e.key === "Escape"){
-      closePopup(popup);
+      closePopup(popups[popup]);
     }
   });
 });

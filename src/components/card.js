@@ -25,7 +25,9 @@ export const initialCards = [
   }
 ];
 
-import {openPhotoPopup} from "./popup";
+import {openPhotoPopup} from "./modal";
+
+export const cardContainer = document.querySelector(".cards");
 
 // Принимает объект карточки с параметрами link и name. Возвращает html-элемент карточки.
 export const createCardElement = card => {
