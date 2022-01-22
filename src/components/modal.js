@@ -48,6 +48,7 @@ export const editProfileButtonClick = () => {
 
 // Обработчик отправки формы добавления карточки
 export const submitAddCardForm = event => {
+  const addCardSubmit = addCardPopup.querySelector(".popup__submit");
   event.preventDefault();
   const card = {
     name: addCardNameInput.value,
@@ -56,5 +57,6 @@ export const submitAddCardForm = event => {
   const cardElement = createCardElement(card);
   cardContainer.prepend(cardElement);
   addCardForm.reset();
+  addCardSubmit.disabled = true;
   closePopup(addCardPopup);
 }
