@@ -19,7 +19,7 @@ const profileAvatar = document.querySelector(".profile__avatar");
 
 let user, cards;
 
-const handleAfterFetchUser = fetchedUser => {
+export const handleAfterFetchUser = fetchedUser => {
   user = fetchedUser;
   profileNameEl.textContent = user.name;
   profileSubtitleEl.textContent = user.about;

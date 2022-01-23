@@ -25,10 +25,10 @@ export const getCards = () => fetch(`${config.baseUrl}/cards`, {
 export const editProfile = (name, about) => fetch(`${config.baseUrl}/users/me`, {
   method: 'PATCH',
   headers: config.headers,
-  body: {
-    name,
-    about,
-  }
+  body: JSON.stringify({
+    name: name,
+    about: about,
+  }),
 })
   .then(res => {
     if(res.ok) return res.json();
