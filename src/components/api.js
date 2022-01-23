@@ -4,10 +4,10 @@ const config = {
     authorization: '8d39c875-e0dc-4420-9d25-ae2d27971d79',
     'Content-type': 'application/json',
   },
-}
+};
 
 export const fetchUserInfo = () => fetch(`${config.baseUrl}/users/me`, {
-  config.headers,
+  headers: config.headers,
 })
   .then(res => {
     if(res.ok) return res.json();
@@ -15,7 +15,7 @@ export const fetchUserInfo = () => fetch(`${config.baseUrl}/users/me`, {
   });
 
 export const getCards = () => fetch(`${config.baseUrl}/cards`, {
-  config.headers,
+  headers: config.headers,
 })
   .then(res => {
     if(res.ok) return res.json();
@@ -24,7 +24,7 @@ export const getCards = () => fetch(`${config.baseUrl}/cards`, {
 
 export const editProfile = (name, about) => fetch(`${config.baseUrl}/users/me`, {
   method: 'PATCH',
-  config.headers,
+  headers: config.headers,
   body: {
     name,
     about,
@@ -37,7 +37,7 @@ export const editProfile = (name, about) => fetch(`${config.baseUrl}/users/me`, 
 
 export const addCard = ({name, link}) => fetch(`${config.baseUrl}/cards`, {
   method: 'POST',
-  config.headers,
+  headers: config.headers,
   body: {
     name,
     link,
@@ -50,23 +50,23 @@ export const addCard = ({name, link}) => fetch(`${config.baseUrl}/cards`, {
 
 export const deleteCard = id => fetch(`${config.baseUrl}/cards/${id}`, {
   method: 'DELETE',
-  config.headers,
+  headers: config.headers,
 }).then(res => {
   if(res.ok) return res.json();
   return Promise.reject(`Ошибка: ${res.status}`);
 })
 
-export const likeCard = cardId = fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+export const likeCard = cardId => fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
   method: 'PUT',
-  config.headers,
+  headers: config.headers,
 }).then(res => {
   if(res.ok) return res.json();
   return Promise.reject(`Ошибка: ${res.status}`);
 });
 
-export const dislikeCard = cardId = fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+export const dislikeCard = cardId => fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
   method: 'DELETE',
-  config.headers,
+  headers: config.headers,
 }).then(res => {
   if(res.ok) return res.json();
   return Promise.reject(`Ошибка: ${res.status}`);

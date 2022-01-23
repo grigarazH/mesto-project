@@ -1,5 +1,5 @@
 import {validateForm} from "./validate";
-import {validationConfig} from "./constants";
+import {profileNameEl, profileSubtitleEl, validationConfig} from "./constants";
 import {cardContainer, createCardElement} from "./card";
 
 const photoPopup = document.querySelector(".popup_type_photo");
@@ -10,8 +10,6 @@ export const photoPopupCaption = photoPopup.querySelector(".popup__photo-caption
 export const editProfileForm = editProfilePopup.querySelector(".popup__container");
 export const addCardForm = addCardPopup.querySelector(".popup__container");
 export const popups = {editProfilePopup, addCardPopup, photoPopup};
-const profileNameEl = document.querySelector(".profile__name");
-const profileSubtitleEl = document.querySelector(".profile__subtitle");
 const editProfileNameInput = editProfilePopup.querySelector("#edit-profile-name");
 const editProfileSubtitleInput = editProfilePopup.querySelector("#edit-profile-subtitle");
 const addCardNameInput = addCardForm.querySelector("#add-card-name");

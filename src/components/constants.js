@@ -7,3 +7,6 @@ export const validationConfig = {
   errorClass: 'popup__error_active',
 }
 
+export const profileNameEl = document.querySelector(".profile__name");
+export const profileSubtitleEl = document.querySelector(".profile__subtitle");
+
