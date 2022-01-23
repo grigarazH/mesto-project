@@ -20,7 +20,7 @@ initialCards.forEach(card => cardContainer.append(createCardElement(card)));
 editProfileButton.addEventListener("click", handleEditProfileButtonClick);
 editProfileForm.addEventListener("submit", submitEditProfileForm);
 
-addCardButton.addEventListener("click",()  => openPopup(popups.addCardPopup));
+addCardButton.addEventListener("click",() => openPopup(popups.addCardPopup));
 
 addCardForm.addEventListener("submit", submitAddCardForm);
 
