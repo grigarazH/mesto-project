@@ -5,7 +5,7 @@ import {
   closePopup,
   editProfileForm,
   submitEditProfileForm,
-  editProfileButtonClick,
+  handleEditProfileButtonClick,
   popups, addCardForm, submitAddCardForm
 } from "./modal";
 import {createCardElement} from "./card";
@@ -17,14 +17,10 @@ const addCardButton = document.querySelector(".profile__add-button");
 
 initialCards.forEach(card => cardContainer.append(createCardElement(card)));
 
-editProfileButton.addEventListener("mousedown", e => e.preventDefault());
-addCardButton.addEventListener("mousedown", e => e.preventDefault());
-editProfileButton.addEventListener("click", editProfileButtonClick);
+editProfileButton.addEventListener("click", handleEditProfileButtonClick);
 editProfileForm.addEventListener("submit", submitEditProfileForm);
 
-addCardButton.addEventListener("click",()  => {
-  openPopup(popups.addCardPopup);
-});
+addCardButton.addEventListener("click",()  => openPopup(popups.addCardPopup));
 
 addCardForm.addEventListener("submit", submitAddCardForm);
 

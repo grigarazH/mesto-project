@@ -17,20 +17,20 @@ const editProfileSubtitleInput = editProfilePopup.querySelector("#edit-profile-s
 const addCardNameInput = addCardForm.querySelector("#add-card-name");
 const addCardLinkInput = addCardForm.querySelector("#add-card-link");
 
-const popupOnEscHandler = event => {
-  const openedPopup = document.querySelector(".popup_opened");
+const handleEscKey = event => {
   if(event.key === "Escape") {
+    const openedPopup = document.querySelector(".popup_opened");
     closePopup(openedPopup);
   }
 }
 
 export const openPopup = popup => {
   popup.classList.add("popup_opened");
-  document.addEventListener("keydown", popupOnEscHandler);
+  document.addEventListener("keydown", handleEscKey);
 }
 export const closePopup = popup => {
   popup.classList.remove("popup_opened");
-  document.removeEventListener("keydown", popupOnEscHandler);
+  document.removeEventListener("keydown", handleEscKey);
 }
 
 export const openPhotoPopup = card => {
@@ -49,7 +49,7 @@ export const submitEditProfileForm = event => {
 }
 
 // Обработчик нажатия на кнопку редактирования профиля
-export const editProfileButtonClick = () => {
+export const handleEditProfileButtonClick = () => {
   openPopup(editProfilePopup);
   editProfileNameInput.value = profileNameEl.textContent;
   editProfileSubtitleInput.value = profileSubtitleEl.textContent;
