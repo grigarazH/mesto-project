@@ -36,8 +36,10 @@ export const createCardElement = card => {
   const cardImage = cardElement.querySelector(".card__image");
   const cardImageContainer = cardElement.querySelector(".card__image-container")
   const cardTitle = cardElement.querySelector(".card__title");
+  const likeAmountElement = cardElement.querySelector(".card__like-amount");
   cardImage.src = card.link;
   cardImage.alt = `Фотография места ${card.name}`;
+  likeAmountElement.textContent = card.likes.length;
   cardImageContainer.addEventListener("click", () => openPhotoPopup(card));
   const likeButton = cardElement.querySelector(".card__like-button");
   likeButton.addEventListener("click", () => {
