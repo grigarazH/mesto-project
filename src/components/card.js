@@ -1,4 +1,6 @@
 import {openPhotoPopup} from "./modal";
+import {dislikeCard, getCards, likeCard} from "./api";
+import {getUser, setCards} from "./index";
 
 export const cardContainer = document.querySelector(".cards");
 
@@ -16,7 +18,28 @@ export const createCardElement = card => {
   cardImageContainer.addEventListener("click", () => openPhotoPopup(card));
   const likeButton = cardElement.querySelector(".card__like-button");
   likeButton.addEventListener("click", () => {
-    toggleLikeButton(likeButton);
+    console.log(likeButton);
+    if(!likeButton.classList.contains("card__like-button_active")) {
+      likeCard(card._id)
+        .then(() => {
+          return getCards();
+        })
+        .then(fetchedCards => {
+          console.log(fetchedCards);
+          setCards(fetchedCards)
+        })
+        .catch(err => console.log(err));
+    } else {
+      dislikeCard(card._id)
+        .then(() => {
+          return getCards();
+        })
+        .then(fetchedCards => {
+          console.log(fetchedCards);
+          setCards(fetchedCards);
+        })
+        .catch(err => console.log(err));
+    }
   });
   const deleteButton = cardElement.querySelector(".card__delete-button");
   deleteButton.addEventListener("click", () => {
@@ -26,9 +49,5 @@ export const createCardElement = card => {
   return cardElement;
 }
 
-// Изменяет состояние кнопки лайка
-const toggleLikeButton = button => {
-  button.classList.toggle("card__like-button_active");
-}
 
 

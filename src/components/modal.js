@@ -2,7 +2,7 @@ import {validateForm} from "./validate";
 import {profileNameEl, profileSubtitleEl, validationConfig} from "./constants";
 import {cardContainer, createCardElement} from "./card";
 import {editProfile, addCard} from "./api";
-import {handleAfterFetchUser} from "./index";
+import {setUser} from "./index";
 
 const photoPopup = document.querySelector(".popup_type_photo");
 const addCardPopup = document.querySelector(".popup_type_add-card");
@@ -48,7 +48,7 @@ export const submitEditProfileForm = event => {
   editProfileSubmitButton.textContent = "Сохранение...";
   editProfile(editProfileNameInput.value, editProfileSubtitleInput.value)
     .then(changedUser => {
-      handleAfterFetchUser(changedUser);
+      setUser(changedUser);
       closePopup(editProfilePopup);
     }).catch(err => console.log(err));
 }

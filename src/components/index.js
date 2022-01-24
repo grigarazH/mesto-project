@@ -20,24 +20,35 @@ const profileAvatar = document.querySelector(".profile__avatar");
 
 let user, cards;
 
-export const handleAfterFetchUser = fetchedUser => {
-  user = fetchedUser;
+export const getUser = () => user;
+
+export const setUser = newUser => {
+  user = newUser;
   profileNameEl.textContent = user.name;
   profileSubtitleEl.textContent = user.about;
   profileAvatar.src = user.avatar;
 }
 
-const handleAfterGetCards = fetchedCards => {
+export const setCards = fetchedCards => {
+  console.log("setting cards");
+  cardContainer.textContent = "";
   cards = fetchedCards
   cards.forEach(card => {
     const cardElement = cardContainer.appendChild(createCardElement(card));
     const deleteButton = cardElement.querySelector(".card__delete-button");
+    const likeButton = cardElement.querySelector(".card__like-button");
+    if(card.likes.some(likeUser => likeUser._id === user._id)) {
+      likeButton.classList.add("card__like-button_active");
+    } else {
+      likeButton.classList.remove("card__like-button_active");
+    }
     if(user._id === card.owner._id) {
       deleteButton.classList.remove("card__delete-button_hidden");
     }else {
       deleteButton.classList.add("card__delete-button_hidden");
     }
   });
+  console.log("set cards");
 }
 
 editProfileButton.addEventListener("click", handleEditProfileButtonClick);
@@ -59,10 +70,10 @@ enableValidation(validationConfig);
 
 fetchUserInfo()
   .then(fetchedUser => {
-    handleAfterFetchUser(fetchedUser);
+    setUser(fetchedUser);
     return getCards()
   }).then(fetchedCards => {
-    handleAfterGetCards(fetchedCards);
+    setCards(fetchedCards);
 })
   .catch(err => console.log(err));
 
