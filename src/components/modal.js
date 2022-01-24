@@ -1,7 +1,7 @@
 import {validateForm} from "./validate";
 import {profileNameEl, profileSubtitleEl, validationConfig} from "./constants";
 import {cardContainer, createCardElement} from "./card";
-import {editProfile} from "./api";
+import {editProfile, addCard} from "./api";
 import {handleAfterFetchUser} from "./index";
 
 const photoPopup = document.querySelector(".popup_type_photo");
@@ -15,6 +15,7 @@ export const popups = {editProfilePopup, addCardPopup, photoPopup};
 const editProfileNameInput = editProfilePopup.querySelector("#edit-profile-name");
 const editProfileSubtitleInput = editProfilePopup.querySelector("#edit-profile-subtitle");
 const editProfileSubmitButton = editProfileForm.querySelector(".popup__submit");
+const addCardSubmitButton = addCardPopup.querySelector(".popup__submit");
 const addCardNameInput = addCardForm.querySelector("#add-card-name");
 const addCardLinkInput = addCardForm.querySelector("#add-card-link");
 
@@ -63,15 +64,24 @@ export const handleEditProfileButtonClick = () => {
 
 // Обработчик отправки формы добавления карточки
 export const submitAddCardForm = event => {
-  const addCardSubmit = addCardPopup.querySelector(".popup__submit");
   event.preventDefault();
   const card = {
     name: addCardNameInput.value,
     link: addCardLinkInput.value,
   };
-  const cardElement = createCardElement(card);
-  cardContainer.prepend(cardElement);
-  addCardForm.reset();
-  addCardSubmit.disabled = true;
-  closePopup(addCardPopup);
+  addCardSubmitButton.textContent = "Сохранение...";
+  addCard(card)
+    .then(card => {
+      const cardElement = createCardElement(card);
+      cardContainer.prepend(cardElement);
+      addCardForm.reset();
+      addCardSubmitButton.disabled = true;
+      closePopup(addCardPopup);
+    })
+    .catch(err => console.log(err));
+}
+
+export const handleAddCardButtonClick = () => {
+  addCardSubmitButton.textContent = "Сохранить";
+  openPopup(addCardPopup);
 }

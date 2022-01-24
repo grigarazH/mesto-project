@@ -6,7 +6,8 @@ import {
   editProfileForm,
   submitEditProfileForm,
   handleEditProfileButtonClick,
-  popups, addCardForm, submitAddCardForm
+  popups, addCardForm, submitAddCardForm,
+  handleAddCardButtonClick,
 } from "./modal";
 import {createCardElement} from "./card";
 import {profileNameEl, profileSubtitleEl, validationConfig} from "./constants";
@@ -31,12 +32,8 @@ const handleAfterGetCards = fetchedCards => {
   cards.forEach(card => {
     const cardElement = cardContainer.appendChild(createCardElement(card));
     const deleteButton = cardElement.querySelector(".card__delete-button");
-    if(user) {
-      if(user._id === card.owner._id) {
-        deleteButton.classList.remove("card__delete-button_hidden");
-      }else {
-        deleteButton.classList.add("card__delete-button_hidden");
-      }
+    if(user._id === card.owner._id) {
+      deleteButton.classList.remove("card__delete-button_hidden");
     }else {
       deleteButton.classList.add("card__delete-button_hidden");
     }
@@ -46,7 +43,7 @@ const handleAfterGetCards = fetchedCards => {
 editProfileButton.addEventListener("click", handleEditProfileButtonClick);
 editProfileForm.addEventListener("submit", submitEditProfileForm);
 
-addCardButton.addEventListener("click",() => openPopup(popups.addCardPopup));
+addCardButton.addEventListener("click", handleAddCardButtonClick);
 
 addCardForm.addEventListener("submit", submitAddCardForm);
 

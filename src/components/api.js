@@ -38,10 +38,10 @@ export const editProfile = (name, about) => fetch(`${config.baseUrl}/users/me`, 
 export const addCard = ({name, link}) => fetch(`${config.baseUrl}/cards`, {
   method: 'POST',
   headers: config.headers,
-  body: {
+  body: JSON.stringify({
     name,
     link,
-  },
+  }),
 })
   .then(res => {
     if(res.ok) return res.json();
