@@ -72,6 +72,17 @@ export const dislikeCard = cardId => fetch(`${config.baseUrl}/cards/likes/${card
   return Promise.reject(`Ошибка: ${res.status}`);
 });
 
+export const updateAvatar = avatarUrl => fetch(`${config.baseUrl}/users/me/avatar`, {
+  method: 'PATCH',
+  headers: config.headers,
+  body: JSON.stringify({
+    avatar: avatarUrl,
+  }),
+}).then(res => {
+  if(res.ok) return res.json();
+  return Promise.reject(`Ошибка: ${res.status}`);
+});
+
 
 
 

@@ -7,16 +7,16 @@ import {
   submitEditProfileForm,
   handleEditProfileButtonClick,
   popups, addCardForm, submitAddCardForm,
-  handleAddCardButtonClick,
+  handleAddCardButtonClick, updateAvatarForm, submitUpdateAvatarForm, handleUpdateAvatarButtonClick,
 } from "./modal";
 import {createCardElement} from "./card";
-import {profileNameEl, profileSubtitleEl, validationConfig} from "./constants";
+import {profileAvatar, profileNameEl, profileSubtitleEl, validationConfig} from "./constants";
 import {enableValidation} from "./validate";
 import {fetchUserInfo, getCards} from "./api";
 
 const editProfileButton = document.querySelector(".profile__edit-button");
 const addCardButton = document.querySelector(".profile__add-button");
-const profileAvatar = document.querySelector(".profile__avatar");
+const profileAvatarButton = document.querySelector(".profile__avatar-button");
 
 let user, cards;
 
@@ -26,7 +26,9 @@ export const setUser = newUser => {
   user = newUser;
   profileNameEl.textContent = user.name;
   profileSubtitleEl.textContent = user.about;
+  console.log(profileAvatar.src);
   profileAvatar.src = user.avatar;
+  console.log(profileAvatar.src);
 }
 
 export const setCards = fetchedCards => {
@@ -65,6 +67,10 @@ Object.keys(popups).forEach(popup => {
     }
   });
 });
+
+profileAvatarButton.addEventListener("click", handleUpdateAvatarButtonClick);
+
+updateAvatarForm.addEventListener("submit", submitUpdateAvatarForm);
 
 enableValidation(validationConfig);
 

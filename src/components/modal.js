@@ -1,23 +1,27 @@
 import {validateForm} from "./validate";
-import {profileNameEl, profileSubtitleEl, validationConfig} from "./constants";
+import {profileAvatar, profileNameEl, profileSubtitleEl, validationConfig} from "./constants";
 import {cardContainer, createCardElement} from "./card";
-import {editProfile, addCard} from "./api";
-import {setUser} from "./index";
+import {editProfile, addCard, updateAvatar} from "./api";
+import {getUser, setUser} from "./index";
 
 const photoPopup = document.querySelector(".popup_type_photo");
 const addCardPopup = document.querySelector(".popup_type_add-card");
 const editProfilePopup = document.querySelector(".popup_type_edit-profile");
+const updateAvatarPopup = document.querySelector(".popup_type_update_avatar");
 export const photoPopupImage = photoPopup.querySelector(".popup__photo");
 export const photoPopupCaption = photoPopup.querySelector(".popup__photo-caption");
 export const editProfileForm = editProfilePopup.querySelector(".popup__container");
 export const addCardForm = addCardPopup.querySelector(".popup__container");
-export const popups = {editProfilePopup, addCardPopup, photoPopup};
-const editProfileNameInput = editProfilePopup.querySelector("#edit-profile-name");
-const editProfileSubtitleInput = editProfilePopup.querySelector("#edit-profile-subtitle");
+export const updateAvatarForm = updateAvatarPopup.querySelector(".popup__container");
+export const popups = {editProfilePopup, addCardPopup, photoPopup, updateAvatarPopup};
+const editProfileNameInput = editProfileForm.elements["edit-profile-name"];
+const editProfileSubtitleInput = editProfileForm.elements["edit-profile-subtitle"];
 const editProfileSubmitButton = editProfileForm.querySelector(".popup__submit");
 const addCardSubmitButton = addCardPopup.querySelector(".popup__submit");
-const addCardNameInput = addCardForm.querySelector("#add-card-name");
-const addCardLinkInput = addCardForm.querySelector("#add-card-link");
+const updateAvatarSubmitButton = updateAvatarPopup.querySelector(".popup__submit");
+const updateAvatarLinkInput = updateAvatarForm.elements["update-avatar-link"];
+const addCardNameInput = addCardForm.elements["add-card-name"];
+const addCardLinkInput = addCardForm.elements["add-card-link"];
 
 const handleEscKey = event => {
   if(event.key === "Escape") {
@@ -62,6 +66,13 @@ export const handleEditProfileButtonClick = () => {
   validateForm(editProfileForm, validationConfig);
 }
 
+export const handleUpdateAvatarButtonClick = () => {
+  updateAvatarSubmitButton.textContent = "Сохранить";
+  openPopup(updateAvatarPopup);
+  updateAvatarLinkInput.value = profileAvatar.src;
+  validateForm(updateAvatarForm, validationConfig);
+}
+
 // Обработчик отправки формы добавления карточки
 export const submitAddCardForm = event => {
   event.preventDefault();
@@ -81,7 +92,18 @@ export const submitAddCardForm = event => {
     .catch(err => console.log(err));
 }
 
-export const handleAddCardButtonClick = () => {
+export const submitUpdateAvatarForm = event => {
+  event.preventDefault();
+  updateAvatarSubmitButton.textContent = "Сохранение...";
+  updateAvatar(updateAvatarLinkInput.value)
+    .then(user => {
+      setUser(user);
+      closePopup(updateAvatarPopup);
+    })
+    .catch(err => console.log(err));
+}
+
+  export const handleAddCardButtonClick = () => {
   addCardSubmitButton.textContent = "Сохранить";
   openPopup(addCardPopup);
 }

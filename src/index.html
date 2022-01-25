@@ -12,13 +12,15 @@
   </header>
   <main class="content page__content">
     <section class="profile content__profile">
-     <img class="profile__avatar" src="<%=require('./images/avatar.jpg')%>" alt="Аватарка">
-     <div class="profile__info">
-       <h1 class="profile__name">Жак-Ив Кусто</h1>
-       <p class="profile__subtitle">Исследователь океана</p>
-       <button type="button" class="profile__edit-button"></button>
-     </div>
-     <button type="button" class="profile__add-button"></button>
+      <button class="profile__avatar-button" type="button">
+        <img class="profile__avatar" src="<%=require('./images/avatar.jpg')%>" alt="Аватарка">
+      </button>
+      <div class="profile__info">
+        <h1 class="profile__name">Жак-Ив Кусто</h1>
+        <p class="profile__subtitle">Исследователь океана</p>
+        <button type="button" class="profile__edit-button"></button>
+      </div>
+      <button type="button" class="profile__add-button"></button>
     </section>
     <section class="cards content__cards">
     </section>
@@ -57,6 +59,18 @@
         </label>
         <button class="popup__submit" type="submit">Сохранить</button>
         <button type="button" class="popup__close-button" ></button>
+      </fieldset>
+    </form>
+  </div>
+  <div class="popup popup_type_update_avatar">
+    <form class="popup__container popup__container_type_form" name="update_avatar" novalidate>
+      <fieldset class="popup__group">
+        <legend class="popup__title">Обновить аватар</legend>
+        <label class="popup__field">
+          <input class="popup__input" required id="update-avatar-link" name="update-avatar-link" type="url" placeholder="Ссылка на картинку">
+          <span class="popup__error update-avatar-link-error"></span>
+        </label>
+        <button class="popup__submit" type="submit">Сохранить</button>
       </fieldset>
     </form>
   </div>
