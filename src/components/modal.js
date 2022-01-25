@@ -1,19 +1,21 @@
 import {validateForm} from "./validate";
 import {profileAvatar, profileNameEl, profileSubtitleEl, validationConfig} from "./constants";
 import {cardContainer, createCardElement} from "./card";
-import {editProfile, addCard, updateAvatar} from "./api";
-import {getUser, setUser} from "./index";
+import {editProfile, addCard, updateAvatar, deleteCard, getCards} from "./api";
+import {getDeleteCardId, getUser, setCards, setUser} from "./index";
 
 const photoPopup = document.querySelector(".popup_type_photo");
 const addCardPopup = document.querySelector(".popup_type_add-card");
 const editProfilePopup = document.querySelector(".popup_type_edit-profile");
 const updateAvatarPopup = document.querySelector(".popup_type_update_avatar");
+const deleteCardPopup = document.querySelector(".popup_type_delete_card");
 export const photoPopupImage = photoPopup.querySelector(".popup__photo");
 export const photoPopupCaption = photoPopup.querySelector(".popup__photo-caption");
 export const editProfileForm = editProfilePopup.querySelector(".popup__container");
 export const addCardForm = addCardPopup.querySelector(".popup__container");
 export const updateAvatarForm = updateAvatarPopup.querySelector(".popup__container");
-export const popups = {editProfilePopup, addCardPopup, photoPopup, updateAvatarPopup};
+export const deleteCardForm = deleteCardPopup.querySelector(".popup__container");
+export const popups = {editProfilePopup, addCardPopup, photoPopup, updateAvatarPopup, deleteCardPopup};
 const editProfileNameInput = editProfileForm.elements["edit-profile-name"];
 const editProfileSubtitleInput = editProfileForm.elements["edit-profile-subtitle"];
 const editProfileSubmitButton = editProfileForm.querySelector(".popup__submit");
@@ -106,4 +108,15 @@ export const submitUpdateAvatarForm = event => {
   export const handleAddCardButtonClick = () => {
   addCardSubmitButton.textContent = "Сохранить";
   openPopup(addCardPopup);
+}
+
+export const submitDeleteCardForm = event => {
+  event.preventDefault();
+  deleteCard(getDeleteCardId())
+    .then(() => getCards())
+    .then(cards => {
+      setCards(cards);
+      closePopup(deleteCardPopup);
+    })
+    .catch(err => console.log(err));
 }

@@ -10,12 +10,10 @@
   min-width: 282px;
   max-width: 430px;
   width: 100%;
-  min-height: 330px;
 }
 
 @media screen and (max-width: 456px) {
   .popup__container_type_form {
-    min-height: 322px;
     padding: 25px 22px;
     margin: 0 19px;
   }

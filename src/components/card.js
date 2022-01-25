@@ -1,6 +1,6 @@
-import {openPhotoPopup} from "./modal";
+import {openPhotoPopup, openPopup, popups} from "./modal";
 import {dislikeCard, getCards, likeCard} from "./api";
-import {getUser, setCards} from "./index";
+import {getUser, setCards, setDeleteCardId} from "./index";
 
 export const cardContainer = document.querySelector(".cards");
 
@@ -43,7 +43,8 @@ export const createCardElement = card => {
   });
   const deleteButton = cardElement.querySelector(".card__delete-button");
   deleteButton.addEventListener("click", () => {
-    cardElement.remove();
+    setDeleteCardId(card._id);
+    openPopup(popups.deleteCardPopup);
   });
   cardTitle.textContent = card.name;
   return cardElement;

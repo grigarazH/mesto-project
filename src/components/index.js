@@ -6,8 +6,15 @@ import {
   editProfileForm,
   submitEditProfileForm,
   handleEditProfileButtonClick,
-  popups, addCardForm, submitAddCardForm,
-  handleAddCardButtonClick, updateAvatarForm, submitUpdateAvatarForm, handleUpdateAvatarButtonClick,
+  popups,
+  addCardForm,
+  submitAddCardForm,
+  handleAddCardButtonClick,
+  updateAvatarForm,
+  submitUpdateAvatarForm,
+  handleUpdateAvatarButtonClick,
+  deleteCardForm,
+  submitDeleteCardForm,
 } from "./modal";
 import {createCardElement} from "./card";
 import {profileAvatar, profileNameEl, profileSubtitleEl, validationConfig} from "./constants";
@@ -18,9 +25,13 @@ const editProfileButton = document.querySelector(".profile__edit-button");
 const addCardButton = document.querySelector(".profile__add-button");
 const profileAvatarButton = document.querySelector(".profile__avatar-button");
 
-let user, cards;
+let user, cards, deleteCardId;
 
 export const getUser = () => user;
+
+export const getDeleteCardId = () => deleteCardId;
+
+export const setDeleteCardId = id => deleteCardId = id;
 
 export const setUser = newUser => {
   user = newUser;
@@ -59,6 +70,8 @@ editProfileForm.addEventListener("submit", submitEditProfileForm);
 addCardButton.addEventListener("click", handleAddCardButtonClick);
 
 addCardForm.addEventListener("submit", submitAddCardForm);
+
+deleteCardForm.addEventListener("submit", submitDeleteCardForm);
 
 Object.keys(popups).forEach(popup => {
   popups[popup].addEventListener("mousedown", e => {
