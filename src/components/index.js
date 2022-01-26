@@ -116,13 +116,11 @@ updateAvatarForm.addEventListener("submit", submitUpdateAvatarForm);
 
 enableValidation(validationConfig);
 
-fetchUserInfo()
-  .then(fetchedUser => {
+Promise.all([fetchUserInfo(), fetchCards()])
+  .then(([fetchedUser, fetchedCards]) => {
     setUser(fetchedUser);
-    return fetchCards()
-  }).then(fetchedCards => {
     setCards(fetchedCards);
-})
+  })
   .catch(err => console.log(err));
 
 
