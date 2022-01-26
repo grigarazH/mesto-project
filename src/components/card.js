@@ -38,13 +38,15 @@ const handleLikeButtonClick = (likeButton, card, likeAmountElement) => {
   if(!likeButton.classList.contains("card__like-button_active")) {
     likeCard(card._id)
       .then(card => {
-        likeAmountElement.textContent = card.likes.count;
+        likeAmountElement.textContent = card.likes.length;
+        likeButton.classList.add("card__like-button_active");
       })
       .catch(err => console.log(err));
   } else {
     dislikeCard(card._id)
       .then(card => {
-        likeAmountElement.textContent = card.likes.count;
+        likeAmountElement.textContent = card.likes.length;
+        likeButton.classList.remove("card__like-button_active");
       })
       .catch(err => console.log(err));
   }
