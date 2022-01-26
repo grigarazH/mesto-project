@@ -27,7 +27,6 @@ const hasInvalidInput = inputList => inputList.some(input => !input.validity.val
 
 // Функция переключения состояния кнопки отправки формы в зависимости от валидности полей формы
 const toggleButtonState = (inputList, buttonElement) => {
-  console.log(inputList);
   if(hasInvalidInput(inputList)) {
     buttonElement.disabled = true;
   }else{

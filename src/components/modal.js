@@ -11,6 +11,7 @@ export const updateAvatarForm = updateAvatarPopup.querySelector(".popup__contain
 export const deleteCardForm = deleteCardPopup.querySelector(".popup__container");
 export const popups = {editProfilePopup, addCardPopup, photoPopup, updateAvatarPopup, deleteCardPopup};
 
+// Обработчик нажатия на клавишу Esc
 const handleEscKey = event => {
   if(event.key === "Escape") {
     const openedPopup = document.querySelector(".popup_opened");
@@ -18,15 +19,19 @@ const handleEscKey = event => {
   }
 }
 
+// Функция открытия попапа
 export const openPopup = popup => {
   popup.classList.add("popup_opened");
   document.addEventListener("keydown", handleEscKey);
 }
+
+// Функция закрытия попапа
 export const closePopup = popup => {
   popup.classList.remove("popup_opened");
   document.removeEventListener("keydown", handleEscKey);
 }
 
+// Функция открытия попапа с фотографией
 export const openPhotoPopup = card => {
   photoPopupImage.src = card.link;
   photoPopupImage.alt = card.name;
@@ -34,6 +39,7 @@ export const openPhotoPopup = card => {
   openPopup(photoPopup);
 }
 
+// Функция установки слушателей для оверлея
 export const setPopupOverlayListeners = () => {
   Object.keys(popups).forEach(popup => {
     popups[popup].addEventListener("mousedown", e => {

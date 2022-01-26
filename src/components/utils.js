@@ -3,23 +3,27 @@ import {cardContainer, createCardElement} from "./card";
 
 let user, cards, deleteCardId;
 
+// Получение локальной информации о пользователе
 export const getUser = () => user;
 
-export const getDeleteCardId = () => deleteCardId;
-
-export const setDeleteCardId = id => deleteCardId = id;
-
+// Запись локальной информации о пользователе
 export const setUser = newUser => {
   user = newUser;
   profileNameEl.textContent = user.name;
   profileSubtitleEl.textContent = user.about;
-  console.log(profileAvatar.src);
   profileAvatar.src = user.avatar;
-  console.log(profileAvatar.src);
 }
 
+// Получение id удаляемой карточки
+export const getDeleteCardId = () => deleteCardId;
+
+// Запись id удаляемой карточки
+export const setDeleteCardId = id => deleteCardId = id;
+
+// Получение локальной информации о карточках
 export const getCards = () => cards;
 
+// Запись локальной информации о карточках
 export const setCards = fetchedCards => {
   console.log("setting cards");
   cardContainer.textContent = "";

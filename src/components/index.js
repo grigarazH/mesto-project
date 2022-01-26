@@ -43,6 +43,7 @@ const handleEditProfileButtonClick = () => {
   validateForm(editProfileForm, validationConfig);
 }
 
+// Обработчик нажатия на кнопку обновления аватара
 const handleUpdateAvatarButtonClick = () => {
   updateAvatarSubmitButton.textContent = "Сохранить";
   openPopup(popups.updateAvatarPopup);
@@ -69,7 +70,7 @@ const submitAddCardForm = event => {
     })
     .catch(err => console.log(err));
 }
-
+// Обработчик отправки формы обновления аватара
 const submitUpdateAvatarForm = event => {
   event.preventDefault();
   updateAvatarSubmitButton.textContent = "Сохранение...";
@@ -81,18 +82,20 @@ const submitUpdateAvatarForm = event => {
     .catch(err => console.log(err));
 }
 
+// Обработчик нажатия на кнопку добавления карточки
 const handleAddCardButtonClick = () => {
   addCardSubmitButton.textContent = "Сохранить";
   openPopup(popups.addCardPopup);
 }
 
+// Обработчик отправки формы удаления карточки
 const submitDeleteCardForm = event => {
   event.preventDefault();
   deleteCard(getDeleteCardId())
     .then(() => {
-      const cardElements = Array.from(cardContainer.querySelectorAll(".card"));
-      const deletedCardIndex = getCards().findIndex(card => card._id === getDeleteCardId());
-      cardElements[deletedCardIndex].remove();
+      const cardElements = Array.from(cardContainer.querySelectorAll(".card")); // Получение массива всех элементов карточки
+      const deletedCardIndex = getCards().findIndex(card => card._id === getDeleteCardId()); // Получение индекса удаляемой карточки в массиве объектов карточек
+      cardElements[deletedCardIndex].remove(); // Удаление элемента карточки
       closePopup(popups.deleteCardPopup);
     })
     .catch(err => console.log(err));
