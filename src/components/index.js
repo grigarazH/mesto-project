@@ -1,30 +1,100 @@
-import {cardContainer} from './card';
+import {cardContainer, createCardElement} from './card';
 import '../pages/index.css';
 import {
-  openPopup,
-  closePopup,
   editProfileForm,
-  submitEditProfileForm,
-  handleEditProfileButtonClick,
-  popups,
   addCardForm,
-  submitAddCardForm,
-  handleAddCardButtonClick,
   updateAvatarForm,
-  submitUpdateAvatarForm,
-  handleUpdateAvatarButtonClick,
-  deleteCardForm,
-  submitDeleteCardForm,
+  deleteCardForm, setPopupOverlayListeners, closePopup, openPopup, popups,
 } from "./modal";
-import {validationConfig} from "./constants";
-import {enableValidation} from "./validate";
-import {fetchUserInfo, getCards} from "./api";
-import {setCards, setUser} from "./utils";
+import {profileAvatar, profileNameEl, profileSubtitleEl, validationConfig} from "./constants";
+import {enableValidation, validateForm} from "./validate";
+import {addCard, deleteCard, editProfile, fetchUserInfo, getCards, updateAvatar} from "./api";
+import {getDeleteCardId, setCards, setUser} from "./utils";
 
 const editProfileButton = document.querySelector(".profile__edit-button");
 const addCardButton = document.querySelector(".profile__add-button");
 const profileAvatarButton = document.querySelector(".profile__avatar-button");
+const editProfileNameInput = editProfileForm.elements["edit-profile-name"];
+const editProfileSubtitleInput = editProfileForm.elements["edit-profile-subtitle"];
+const editProfileSubmitButton = editProfileForm.querySelector(".popup__submit");
+const addCardSubmitButton = popups.addCardPopup.querySelector(".popup__submit");
+const updateAvatarSubmitButton = popups.updateAvatarPopup.querySelector(".popup__submit");
+const updateAvatarLinkInput = updateAvatarForm.elements["update-avatar-link"];
+const addCardNameInput = addCardForm.elements["add-card-name"];
+const addCardLinkInput = addCardForm.elements["add-card-link"];
 
+// Обработчик отправки формы редактирования профиля
+const submitEditProfileForm = event => {
+  event.preventDefault();
+  editProfileSubmitButton.textContent = "Сохранение...";
+  editProfile(editProfileNameInput.value, editProfileSubtitleInput.value)
+    .then(changedUser => {
+      setUser(changedUser);
+      closePopup(popups.editProfilePopup);
+    }).catch(err => console.log(err));
+}
+
+// Обработчик нажатия на кнопку редактирования профиля
+const handleEditProfileButtonClick = () => {
+  editProfileSubmitButton.textContent = "Сохранить";
+  openPopup(popups.editProfilePopup);
+  editProfileNameInput.value = profileNameEl.textContent;
+  editProfileSubtitleInput.value = profileSubtitleEl.textContent;
+  validateForm(editProfileForm, validationConfig);
+}
+
+const handleUpdateAvatarButtonClick = () => {
+  updateAvatarSubmitButton.textContent = "Сохранить";
+  openPopup(popups.updateAvatarPopup);
+  updateAvatarLinkInput.value = profileAvatar.src;
+  validateForm(updateAvatarForm, validationConfig);
+}
+
+// Обработчик отправки формы добавления карточки
+const submitAddCardForm = event => {
+  event.preventDefault();
+  const card = {
+    name: addCardNameInput.value,
+    link: addCardLinkInput.value,
+  };
+  addCardSubmitButton.textContent = "Сохранение...";
+  addCard(card)
+    .then(card => {
+      const cardElement = createCardElement(card);
+      cardContainer.prepend(cardElement);
+      addCardForm.reset();
+      addCardSubmitButton.disabled = true;
+      closePopup(addCardPopup);
+    })
+    .catch(err => console.log(err));
+}
+
+const submitUpdateAvatarForm = event => {
+  event.preventDefault();
+  updateAvatarSubmitButton.textContent = "Сохранение...";
+  updateAvatar(updateAvatarLinkInput.value)
+    .then(user => {
+      setUser(user);
+      closePopup(popups.updateAvatarPopup);
+    })
+    .catch(err => console.log(err));
+}
+
+const handleAddCardButtonClick = () => {
+  addCardSubmitButton.textContent = "Сохранить";
+  openPopup(addCardPopup);
+}
+
+const submitDeleteCardForm = event => {
+  event.preventDefault();
+  deleteCard(getDeleteCardId())
+    .then(() => getCards())
+    .then(cards => {
+      setCards(cards);
+      closePopup(popups.deleteCardPopup);
+    })
+    .catch(err => console.log(err));
+}
 
 
 editProfileButton.addEventListener("click", handleEditProfileButtonClick);
@@ -36,13 +106,7 @@ addCardForm.addEventListener("submit", submitAddCardForm);
 
 deleteCardForm.addEventListener("submit", submitDeleteCardForm);
 
-Object.keys(popups).forEach(popup => {
-  popups[popup].addEventListener("mousedown", e => {
-    if(e.target.classList.contains("popup") || e.target.classList.contains("popup__close-button")) {
-      closePopup(popups[popup]);
-    }
-  });
-});
+setPopupOverlayListeners();
 
 profileAvatarButton.addEventListener("click", handleUpdateAvatarButtonClick);
 
