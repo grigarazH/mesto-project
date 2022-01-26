@@ -1,6 +1,6 @@
 import {openPhotoPopup, openPopup, popups} from "./modal";
 import {dislikeCard, getCards, likeCard} from "./api";
-import {setCards, setDeleteCardId} from "./utils";
+import {getUser, setCards, setDeleteCardId} from "./utils";
 
 export const cardContainer = document.querySelector(".cards");
 
@@ -18,36 +18,36 @@ export const createCardElement = card => {
   cardImageContainer.addEventListener("click", () => openPhotoPopup(card));
   const likeButton = cardElement.querySelector(".card__like-button");
   likeButton.addEventListener("click", () => {
-    console.log(likeButton);
-    if(!likeButton.classList.contains("card__like-button_active")) {
-      likeCard(card._id)
-        .then(() => {
-          return getCards();
-        })
-        .then(fetchedCards => {
-          console.log(fetchedCards);
-          setCards(fetchedCards)
-        })
-        .catch(err => console.log(err));
-    } else {
-      dislikeCard(card._id)
-        .then(() => {
-          return getCards();
-        })
-        .then(fetchedCards => {
-          console.log(fetchedCards);
-          setCards(fetchedCards);
-        })
-        .catch(err => console.log(err));
-    }
+    handleLikeButtonClick(likeButton, card, likeAmountElement);
   });
   const deleteButton = cardElement.querySelector(".card__delete-button");
   deleteButton.addEventListener("click", () => {
     setDeleteCardId(card._id);
     openPopup(popups.deleteCardPopup);
   });
+  if(card.owner._id === getUser()._id) {
+    deleteButton.classList.remove("card__delete-button_hidden");
+  } else {
+    deleteButton.classList.add("card__delete-button_hidden");
+  }
   cardTitle.textContent = card.name;
   return cardElement;
+}
+
+const handleLikeButtonClick = (likeButton, card, likeAmountElement) => {
+  if(!likeButton.classList.contains("card__like-button_active")) {
+    likeCard(card._id)
+      .then(card => {
+        likeAmountElement.textContent = card.likes.count;
+      })
+      .catch(err => console.log(err));
+  } else {
+    dislikeCard(card._id)
+      .then(card => {
+        likeAmountElement.textContent = card.likes.count;
+      })
+      .catch(err => console.log(err));
+  }
 }
 
 

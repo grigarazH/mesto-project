@@ -24,18 +24,11 @@ export const setCards = fetchedCards => {
   cards = fetchedCards
   cards.forEach(card => {
     const cardElement = cardContainer.appendChild(createCardElement(card));
-    const deleteButton = cardElement.querySelector(".card__delete-button");
     const likeButton = cardElement.querySelector(".card__like-button");
     if(card.likes.some(likeUser => likeUser._id === user._id)) {
       likeButton.classList.add("card__like-button_active");
     } else {
       likeButton.classList.remove("card__like-button_active");
     }
-    if(user._id === card.owner._id) {
-      deleteButton.classList.remove("card__delete-button_hidden");
-    }else {
-      deleteButton.classList.add("card__delete-button_hidden");
-    }
   });
-  console.log("set cards");
 }
