@@ -1,5 +1,5 @@
 import {openPhotoPopup, openPopup, popups} from "./modal";
-import {dislikeCard, getCards, likeCard} from "./api";
+import {dislikeCard, fetchCards, likeCard} from "./api";
 import {getUser, setCards, setDeleteCardId} from "./utils";
 
 export const cardContainer = document.querySelector(".cards");

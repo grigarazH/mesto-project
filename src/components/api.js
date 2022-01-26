@@ -16,7 +16,7 @@ export const fetchUserInfo = () => fetch(`${config.baseUrl}/users/me`, {
 })
   .then(res => handleFetchResponse(res));
 
-export const getCards = () => fetch(`${config.baseUrl}/cards`, {
+export const fetchCards = () => fetch(`${config.baseUrl}/cards`, {
   headers: config.headers,
 })
   .then(res => handleFetchResponse(res));

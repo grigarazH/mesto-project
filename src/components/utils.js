@@ -18,6 +18,8 @@ export const setUser = newUser => {
   console.log(profileAvatar.src);
 }
 
+export const getCards = () => cards;
+
 export const setCards = fetchedCards => {
   console.log("setting cards");
   cardContainer.textContent = "";

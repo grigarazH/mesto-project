@@ -8,8 +8,8 @@ import {
 } from "./modal";
 import {profileAvatar, profileNameEl, profileSubtitleEl, validationConfig} from "./constants";
 import {enableValidation, validateForm} from "./validate";
-import {addCard, deleteCard, editProfile, fetchUserInfo, getCards, updateAvatar} from "./api";
-import {getDeleteCardId, setCards, setUser} from "./utils";
+import {addCard, deleteCard, editProfile, fetchUserInfo, fetchCards, updateAvatar} from "./api";
+import {getCards, getDeleteCardId, setCards, setUser} from "./utils";
 
 const editProfileButton = document.querySelector(".profile__edit-button");
 const addCardButton = document.querySelector(".profile__add-button");
@@ -62,6 +62,7 @@ const submitAddCardForm = event => {
     .then(card => {
       const cardElement = createCardElement(card);
       cardContainer.prepend(cardElement);
+      getCards().unshift(card);
       addCardForm.reset();
       validateForm(addCardForm, validationConfig);
       closePopup(popups.addCardPopup);
@@ -88,9 +89,10 @@ const handleAddCardButtonClick = () => {
 const submitDeleteCardForm = event => {
   event.preventDefault();
   deleteCard(getDeleteCardId())
-    .then(() => getCards())
-    .then(cards => {
-      setCards(cards);
+    .then(() => {
+      const cardElements = Array.from(cardContainer.querySelectorAll(".card"));
+      const deletedCardIndex = getCards().findIndex(card => card._id === getDeleteCardId());
+      cardElements[deletedCardIndex].remove();
       closePopup(popups.deleteCardPopup);
     })
     .catch(err => console.log(err));
@@ -117,7 +119,7 @@ enableValidation(validationConfig);
 fetchUserInfo()
   .then(fetchedUser => {
     setUser(fetchedUser);
-    return getCards()
+    return fetchCards()
   }).then(fetchedCards => {
     setCards(fetchedCards);
 })
