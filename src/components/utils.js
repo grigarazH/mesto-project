@@ -25,7 +25,6 @@ export const getCards = () => cards;
 
 // Запись локальной информации о карточках
 export const setCards = fetchedCards => {
-  console.log("setting cards");
   cardContainer.textContent = "";
   cards = fetchedCards
   cards.forEach(card => {
