@@ -63,8 +63,8 @@ const submitAddCardForm = event => {
       const cardElement = createCardElement(card);
       cardContainer.prepend(cardElement);
       addCardForm.reset();
-      addCardSubmitButton.disabled = true;
-      closePopup(addCardPopup);
+      validateForm(addCardForm, validationConfig);
+      closePopup(popups.addCardPopup);
     })
     .catch(err => console.log(err));
 }
@@ -82,7 +82,7 @@ const submitUpdateAvatarForm = event => {
 
 const handleAddCardButtonClick = () => {
   addCardSubmitButton.textContent = "Сохранить";
-  openPopup(addCardPopup);
+  openPopup(popups.addCardPopup);
 }
 
 const submitDeleteCardForm = event => {

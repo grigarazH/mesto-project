@@ -1,9 +1,3 @@
-import {validateForm} from "./validate";
-import {profileAvatar, profileNameEl, profileSubtitleEl, validationConfig} from "./constants";
-import {cardContainer, createCardElement} from "./card";
-import {editProfile, addCard, updateAvatar, deleteCard, getCards} from "./api";
-import {getDeleteCardId, setCards, setUser} from "./utils";
-
 const photoPopup = document.querySelector(".popup_type_photo");
 const addCardPopup = document.querySelector(".popup_type_add-card");
 const editProfilePopup = document.querySelector(".popup_type_edit-profile");
