@@ -17,6 +17,11 @@ export const createCardElement = card => {
   likeAmountElement.textContent = card.likes.length;
   cardImageContainer.addEventListener("click", () => openPhotoPopup(card));
   const likeButton = cardElement.querySelector(".card__like-button");
+  if(card.likes.some(likeUser => likeUser._id === getUser()._id)) {
+    likeButton.classList.add("card__like-button_active");
+  } else {
+    likeButton.classList.remove("card__like-button_active");
+  }
   likeButton.addEventListener("click", () => {
     handleLikeButtonClick(likeButton, card, likeAmountElement);
   });

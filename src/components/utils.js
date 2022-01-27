@@ -28,12 +28,6 @@ export const setCards = fetchedCards => {
   cardContainer.textContent = "";
   cards = fetchedCards
   cards.forEach(card => {
-    const cardElement = cardContainer.appendChild(createCardElement(card));
-    const likeButton = cardElement.querySelector(".card__like-button");
-    if(card.likes.some(likeUser => likeUser._id === user._id)) {
-      likeButton.classList.add("card__like-button_active");
-    } else {
-      likeButton.classList.remove("card__like-button_active");
-    }
+    cardContainer.appendChild(createCardElement(card));
   });
 }
