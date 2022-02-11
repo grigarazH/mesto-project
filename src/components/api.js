@@ -1,11 +1,5 @@
 /*
-const config = {
-  baseUrl: 'https://mesto.nomoreparties.co/v1/plus-cohort-6',
-  headers: {
-    authorization: '8d39c875-e0dc-4420-9d25-ae2d27971d79',
-    'Content-type': 'application/json',
-  },
-};
+
  */
 
 export default class Api {

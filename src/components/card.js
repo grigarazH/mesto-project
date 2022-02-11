@@ -1,3 +1,4 @@
+/*
 import {openPhotoPopup, openPopup, popups} from "./modal";
 import {dislikeCard, fetchCards, likeCard} from "./api";
 import {getUser, setCards, setDeleteCardId} from "./utils";
@@ -59,3 +60,37 @@ const handleLikeButtonClick = (likeButton, card, likeAmountElement) => {
 
 
 
+*/
+
+export default class Card {
+  constructor(card, templateSelector, handleCardClick, handleLikeClick, handleDeleteClick) {
+    this._card = card;
+    this._templateSelector = templateSelector;
+    this._handleCardClick = handleCardClick;
+    this._handleLikeClick = handleLikeClick;
+    this._handleDeleteClick = handleDeleteClick;
+  }
+
+  _getElement() {
+    const cardElement = document.querySelector(this._templateSelector).content.querySelector('.card').cloneNode(true);
+    return cardElement;
+  }
+
+  _setEventListeners() {
+    this._element.addEventListener('click', () => this._handleCardClick());
+    const likeButton = this._element.querySelector('.card__like-button');
+    const deleteButton = this._element.querySelector('.card__delete-button');
+    const likeAmount = this._element.querySelector('.card__like-amount');
+    likeButton.addEventListener('click', () => this._handleLikeClick(likeButton, likeAmount));
+    deleteButton.addEventListener('click', () => this._handleDeleteClick());
+  }
+
+  generate() {
+    this._element = this._getElement();
+    this._element.querySelector('.card__title').textContent = this._card.title;
+    this._element.querySelector('.card__image').src = this._card.link;
+    this._element.querySelector('.card__image').alt = this._card.title;
+    this._setEventListeners();
+    return this._element;
+  }
+}
