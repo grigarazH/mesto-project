@@ -1,5 +1,5 @@
 import {profileAvatar, profileNameEl, profileSubtitleEl} from "./constants";
-import {cardContainer, createCardElement} from "./card";
+import {cardContainer, createCardElement} from "./Card";
 
 let user, cards, deleteCardId;
 

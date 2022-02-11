@@ -1,4 +1,4 @@
-import {cardContainer, createCardElement} from './card';
+import {cardContainer, createCardElement} from './Card';
 import '../pages/index.css';
 import {
   editProfileForm,
@@ -7,8 +7,8 @@ import {
   deleteCardForm, setPopupOverlayListeners, closePopup, openPopup, popups,
 } from "./modal";
 import {profileAvatar, profileNameEl, profileSubtitleEl, validationConfig} from "./constants";
-import {enableValidation, validateForm} from "./validate";
-import {addCard, deleteCard, editProfile, fetchUserInfo, fetchCards, updateAvatar} from "./api";
+import {enableValidation, validateForm} from "./FormValidator";
+import {addCard, deleteCard, editProfile, fetchUserInfo, fetchCards, updateAvatar} from "./Api";
 import {getCards, getDeleteCardId, setCards, setUser} from "./utils";
 
 const editProfileButton = document.querySelector(".profile__edit-button");
