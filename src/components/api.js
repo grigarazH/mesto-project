@@ -1,3 +1,4 @@
+/*
 const config = {
   baseUrl: 'https://mesto.nomoreparties.co/v1/plus-cohort-6',
   headers: {
@@ -5,74 +6,77 @@ const config = {
     'Content-type': 'application/json',
   },
 };
+ */
 
-// Обработка ответа сервера
-const handleFetchResponse = response => {
-  if(response.ok) return response.json();
-  return Promise.reject(`Ошибка: ${response.status}`);
+export default class Api {
+  constructor({baseUrl, headers}) {
+    this._baseUrl = baseUrl;
+    this._headers = headers;
+  }
+
+  _handleFetchResponse(response) {
+    if (response.ok) return response.json();
+    return Promise.reject(`Ошибка: ${response.status}`);
+  }
+
+  fetchUserInfo() {
+    return fetch(`${this._baseUrl}/users/me`, {
+      headers: this._headers,
+    })
+      .then(res => this._handleFetchResponse(res));
+  }
+
+  fetchCards() {
+    return fetch(`${this._baseUrl}/cards`, {
+      headers: this._headers,
+    }).then(res => this._handleFetchResponse(res));
+  }
+  editProfile(name, about) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        name: name,
+        about: about,
+      }),
+    }).then(res => this._handleFetchResponse(res));
+  }
+  addCard({name, link}) {
+    return fetch(`${this._baseUrl}/cards`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify({
+        name,
+        link,
+      }),
+    }).then(res => this._handleFetchResponse(res));
+  }
+  deleteCard(id) {
+    return fetch(`${this._baseUrl}/cards/${id}`, {
+      method: 'DELETE',
+      headers: this._headers,
+    }).then(res => this._handleFetchResponse(res));
+  }
+  likeCard(cardId) {
+    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+      method: 'PUT',
+      headers: this._headers,
+    }).then(res => this._handleFetchResponse(res));
+  }
+  dislikeCard(cardId) {
+    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+      method: 'DELETE',
+      headers: this._headers,
+    }).then(res => this._handleFetchResponse(res));
+  }
+
+  updateAvatar(avatarUrl) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: avatarUrl,
+      }),
+    }).then(res => this._handleFetchResponse(res));
+  }
 }
-
-// Получение информации о пользователе на сервере
-export const fetchUserInfo = () => fetch(`${config.baseUrl}/users/me`, {
-  headers: config.headers,
-})
-  .then(res => handleFetchResponse(res));
-
-// Получение списка карточек на сервере
-export const fetchCards = () => fetch(`${config.baseUrl}/cards`, {
-  headers: config.headers,
-})
-  .then(res => handleFetchResponse(res));
-
-// Изменение профиля на сервере
-export const editProfile = (name, about) => fetch(`${config.baseUrl}/users/me`, {
-  method: 'PATCH',
-  headers: config.headers,
-  body: JSON.stringify({
-    name: name,
-    about: about,
-  }),
-})
-  .then(res => handleFetchResponse(res));
-
-// Добавление карточки на сервере
-export const addCard = ({name, link}) => fetch(`${config.baseUrl}/cards`, {
-  method: 'POST',
-  headers: config.headers,
-  body: JSON.stringify({
-    name,
-    link,
-  }),
-})
-  .then(res => handleFetchResponse(res));
-
-// Удаление карточки на сервере
-export const deleteCard = id => fetch(`${config.baseUrl}/cards/${id}`, {
-  method: 'DELETE',
-  headers: config.headers,
-}).then(res => handleFetchResponse(res))
-
-// Добавление лайка карточке на сервере
-export const likeCard = cardId => fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
-  method: 'PUT',
-  headers: config.headers,
-}).then(res => handleFetchResponse(res));
-
-// Удаление лайка у карточки на сервере
-export const dislikeCard = cardId => fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
-  method: 'DELETE',
-  headers: config.headers,
-}).then(res => handleFetchResponse(res));
-
-// Обновление аватара на сервере
-export const updateAvatar = avatarUrl => fetch(`${config.baseUrl}/users/me/avatar`, {
-  method: 'PATCH',
-  headers: config.headers,
-  body: JSON.stringify({
-    avatar: avatarUrl,
-  }),
-}).then(res => handleFetchResponse(res));
-
-
-
-
