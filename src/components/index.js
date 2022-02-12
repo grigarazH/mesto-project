@@ -1,24 +1,13 @@
-import Card, {cardContainer, createCardElement} from './Card';
+import Card, {cardContainer} from './Card';
 import '../pages/index.css';
-import {
-  editProfileForm,
-  addCardForm,
-  updateAvatarForm,
-  deleteCardForm, setPopupOverlayListeners, closePopup, openPopup, popups, photoPopupImage, photoPopupCaption,
-} from "./modal";
-import {
-  apiConfig,
-  cardTemplateSelector,
-  profileAvatar,
-  profileNameEl,
-  profileSubtitleEl,
-  validationConfig
-} from "./constants";
-import {enableValidation, validateForm} from "./FormValidator";
-import Api, {addCard, deleteCard, editProfile, fetchUserInfo, fetchCards, updateAvatar} from "./Api";
-import {getCards, getDeleteCardId, setCards, setDeleteCardId, setUser} from "./utils";
+import {addCardForm, closePopup, editProfileForm, popups, updateAvatarForm,} from "./modal";
+import {apiConfig, cardTemplateSelector, validationConfig} from "./constants";
+import FormValidator, {validateForm} from "./FormValidator";
+import Api, {addCard, editProfile, updateAvatar} from "./Api";
+import {getCards, getDeleteCardId, setDeleteCardId, setUser} from "./utils";
 import PopupWithForm from "./PopupWithForm";
 import PopupWithImage from "./PopupWithImage";
+import UserInfo from "./UserInfo";
 
 const editProfileButton = document.querySelector(".profile__edit-button");
 const addCardButton = document.querySelector(".profile__add-button");
@@ -33,13 +22,18 @@ const addCardNameInput = addCardForm.elements["add-card-name"];
 const addCardLinkInput = addCardForm.elements["add-card-link"];
 
 const api = new Api(apiConfig);
+const userInfo = new UserInfo(".profile__name", ".profile__subtitle", ({name, about}) => {
+  api.editProfile(name, about)
+    .then()
+    .catch(err => console.log(err))
+});
 const cardSection = new Section({
   renderer: card => {
     const cardElement = new Card(card, cardTemplateSelector, () => {
       const photoPopup = new PopupWithImage(".popup_type_photo");
       photoPopup.open();
     }, (likeButton, likeAmount) => {
-      if(!likeButton.classList.contains("card__like-button_active")) {
+      if (!likeButton.classList.contains("card__like-button_active")) {
         api.likeCard(card._id)
           .then(card => {
             likeAmount.textContent = card.likes.length;
@@ -99,7 +93,25 @@ const addCardPopup = new PopupWithForm(".popup_type_add-card", inputValues => {
     .catch(err => console.log(err));
 });
 
+const updateAvatarPopup = new PopupWithForm(".popup_type_update_avatar", inputValues => {
+  updateAvatarSubmitButton.textContent = "Сохранение...";
+  updateAvatar(inputValues["update-avatar-link"])
+    .then(user => {
+      setUser(user);
+      updateAvatarPopup.close();
+    })
+    .catch(err => console.log(err));
+})
 
+const editProfileFormValidator = new FormValidator(validationConfig, ".popup_type_edit-profile");
+const deleteCardFormValidator = new FormValidator(validationConfig, ".popup_type_delete-card");
+const addCardFormValidator = new FormValidator(validationConfig, ".popup_type_add-card");
+const updateAvatarFormValidator = new FormValidator(validationConfig, ".popup_type_update-avatar");
+
+editProfileFormValidator.enableValidation();
+deleteCardFormValidator.enableValidation();
+addCardFormValidator.enableValidation();
+updateAvatarFormValidator.enableValidation();
 
 // // Обработчик отправки формы редактирования профиля
 // const submitEditProfileForm = event => {
