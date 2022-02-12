@@ -1,14 +1,13 @@
 export default class UserInfo {
-  constructor(nameSelector, aboutSelector, {getInfoCallback, setInfoCallback}) {
+  constructor(nameSelector, aboutSelector, {fetchInfoCallback, setInfoCallback}) {
     this._nameSelector = nameSelector;
     this._aboutSelector = aboutSelector;
-    this._getInfoCallBack = getInfoCallback;
+    this._fetchInfoCallback = fetchInfoCallback;
     this._setInfoCallBack = setInfoCallback;
   }
 
-  getUserInfo() {
-    this._user = this._getInfoCallBack();
-    return this._user;
+  async getUserInfo() {
+    return await this._fetchInfoCallback();
   }
 
   setUserInfo() {

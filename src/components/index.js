@@ -1,15 +1,24 @@
-import {cardContainer, createCardElement} from './Card';
+import Card, {cardContainer, createCardElement} from './Card';
 import '../pages/index.css';
 import {
   editProfileForm,
   addCardForm,
   updateAvatarForm,
-  deleteCardForm, setPopupOverlayListeners, closePopup, openPopup, popups,
+  deleteCardForm, setPopupOverlayListeners, closePopup, openPopup, popups, photoPopupImage, photoPopupCaption,
 } from "./modal";
-import {profileAvatar, profileNameEl, profileSubtitleEl, validationConfig} from "./constants";
+import {
+  apiConfig,
+  cardTemplateSelector,
+  profileAvatar,
+  profileNameEl,
+  profileSubtitleEl,
+  validationConfig
+} from "./constants";
 import {enableValidation, validateForm} from "./FormValidator";
-import {addCard, deleteCard, editProfile, fetchUserInfo, fetchCards, updateAvatar} from "./Api";
-import {getCards, getDeleteCardId, setCards, setUser} from "./utils";
+import Api, {addCard, deleteCard, editProfile, fetchUserInfo, fetchCards, updateAvatar} from "./Api";
+import {getCards, getDeleteCardId, setCards, setDeleteCardId, setUser} from "./utils";
+import PopupWithForm from "./PopupWithForm";
+import PopupWithImage from "./PopupWithImage";
 
 const editProfileButton = document.querySelector(".profile__edit-button");
 const addCardButton = document.querySelector(".profile__add-button");
@@ -23,37 +32,35 @@ const updateAvatarLinkInput = updateAvatarForm.elements["update-avatar-link"];
 const addCardNameInput = addCardForm.elements["add-card-name"];
 const addCardLinkInput = addCardForm.elements["add-card-link"];
 
-// Обработчик отправки формы редактирования профиля
-const submitEditProfileForm = event => {
-  event.preventDefault();
+const api = new Api(apiConfig);
+const cardSection = new Section({
+  items: getCards(),
+  renderer: card => {
+    const cardObject = new Card(card, cardTemplateSelector, )
+  },
+});
+
+const deleteCardPopup = new PopupWithForm(".popup_type_delete-card", inputValues => {
+  api.deleteCard(getDeleteCardId())
+    .then(() => {
+      const cardElements = Array.from(cardContainer.querySelectorAll(".card")); // Получение массива всех элементов карточки
+      const deletedCardIndex = getCards().findIndex(card => card._id === getDeleteCardId()); // Получение индекса удаляемой карточки в массиве объектов карточек
+      cardElements[deletedCardIndex].remove(); // Удаление элемента карточки
+      closePopup(popups.deleteCardPopup);
+    })
+    .catch(err => console.log(err));
+});
+
+const editProfilePopup = new PopupWithForm(".popup_type_edit-profile", inputValues => {
   editProfileSubmitButton.textContent = "Сохранение...";
-  editProfile(editProfileNameInput.value, editProfileSubtitleInput.value)
+  editProfile(inputValues["edit-profile-name"], inputValues["edit-profile-subtitle"])
     .then(changedUser => {
       setUser(changedUser);
       closePopup(popups.editProfilePopup);
     }).catch(err => console.log(err));
-}
+});
 
-// Обработчик нажатия на кнопку редактирования профиля
-const handleEditProfileButtonClick = () => {
-  editProfileSubmitButton.textContent = "Сохранить";
-  openPopup(popups.editProfilePopup);
-  editProfileNameInput.value = profileNameEl.textContent;
-  editProfileSubtitleInput.value = profileSubtitleEl.textContent;
-  validateForm(editProfileForm, validationConfig);
-}
-
-// Обработчик нажатия на кнопку обновления аватара
-const handleUpdateAvatarButtonClick = () => {
-  updateAvatarSubmitButton.textContent = "Сохранить";
-  openPopup(popups.updateAvatarPopup);
-  updateAvatarLinkInput.value = profileAvatar.src;
-  validateForm(updateAvatarForm, validationConfig);
-}
-
-// Обработчик отправки формы добавления карточки
-const submitAddCardForm = event => {
-  event.preventDefault();
+const addCardPopup = new PopupWithForm(".popup_type_add-card", inputValues => {
   const card = {
     name: addCardNameInput.value,
     link: addCardLinkInput.value,
@@ -61,6 +68,29 @@ const submitAddCardForm = event => {
   addCardSubmitButton.textContent = "Сохранение...";
   addCard(card)
     .then(card => {
+      const cardObject = new Card(card, cardTemplateSelector, () => {
+        const photoPopup = new PopupWithImage(".popup_type_photo");
+        photoPopup.open();
+      }, (likeButton, likeAmount) => {
+        if(!likeButton.classList.contains("card__like-button_active")) {
+          api.likeCard(card._id)
+            .then(card => {
+              likeAmount.textContent = card.likes.length;
+              likeButton.classList.add("card__like-button_active");
+            })
+            .catch(err => console.log(err));
+        } else {
+          api.dislikeCard(card._id)
+            .then(card => {
+              likeAmount.textContent = card.likes.length;
+              likeButton.classList.remove("card__like-button_active");
+            })
+            .catch(err => console.log(err));
+        }
+      }, () => {
+        setDeleteCardId(card._id);
+        deleteCardPopup.open();
+      })
       const cardElement = createCardElement(card);
       cardContainer.prepend(cardElement);
       getCards().unshift(card);
@@ -69,61 +99,110 @@ const submitAddCardForm = event => {
       closePopup(popups.addCardPopup);
     })
     .catch(err => console.log(err));
-}
-// Обработчик отправки формы обновления аватара
-const submitUpdateAvatarForm = event => {
-  event.preventDefault();
-  updateAvatarSubmitButton.textContent = "Сохранение...";
-  updateAvatar(updateAvatarLinkInput.value)
-    .then(user => {
-      setUser(user);
-      closePopup(popups.updateAvatarPopup);
-    })
-    .catch(err => console.log(err));
-}
-
-// Обработчик нажатия на кнопку добавления карточки
-const handleAddCardButtonClick = () => {
-  addCardSubmitButton.textContent = "Сохранить";
-  openPopup(popups.addCardPopup);
-}
-
-// Обработчик отправки формы удаления карточки
-const submitDeleteCardForm = event => {
-  event.preventDefault();
-  deleteCard(getDeleteCardId())
-    .then(() => {
-      const cardElements = Array.from(cardContainer.querySelectorAll(".card")); // Получение массива всех элементов карточки
-      const deletedCardIndex = getCards().findIndex(card => card._id === getDeleteCardId()); // Получение индекса удаляемой карточки в массиве объектов карточек
-      cardElements[deletedCardIndex].remove(); // Удаление элемента карточки
-      closePopup(popups.deleteCardPopup);
-    })
-    .catch(err => console.log(err));
-}
+});
 
 
-editProfileButton.addEventListener("click", handleEditProfileButtonClick);
-editProfileForm.addEventListener("submit", submitEditProfileForm);
 
-addCardButton.addEventListener("click", handleAddCardButtonClick);
-
-addCardForm.addEventListener("submit", submitAddCardForm);
-
-deleteCardForm.addEventListener("submit", submitDeleteCardForm);
-
-setPopupOverlayListeners();
-
-profileAvatarButton.addEventListener("click", handleUpdateAvatarButtonClick);
-
-updateAvatarForm.addEventListener("submit", submitUpdateAvatarForm);
-
-enableValidation(validationConfig);
-
-Promise.all([fetchUserInfo(), fetchCards()])
-  .then(([fetchedUser, fetchedCards]) => {
-    setUser(fetchedUser);
-    setCards(fetchedCards);
-  })
-  .catch(err => console.log(err));
-
+// // Обработчик отправки формы редактирования профиля
+// const submitEditProfileForm = event => {
+//   event.preventDefault();
+//   editProfileSubmitButton.textContent = "Сохранение...";
+//   editProfile(editProfileNameInput.value, editProfileSubtitleInput.value)
+//     .then(changedUser => {
+//       setUser(changedUser);
+//       closePopup(popups.editProfilePopup);
+//     }).catch(err => console.log(err));
+// }
+//
+// // Обработчик нажатия на кнопку редактирования профиля
+// const handleEditProfileButtonClick = () => {
+//   editProfileSubmitButton.textContent = "Сохранить";
+//   openPopup(popups.editProfilePopup);
+//   editProfileNameInput.value = profileNameEl.textContent;
+//   editProfileSubtitleInput.value = profileSubtitleEl.textContent;
+//   validateForm(editProfileForm, validationConfig);
+// }
+//
+// // Обработчик нажатия на кнопку обновления аватара
+// const handleUpdateAvatarButtonClick = () => {
+//   updateAvatarSubmitButton.textContent = "Сохранить";
+//   openPopup(popups.updateAvatarPopup);
+//   updateAvatarLinkInput.value = profileAvatar.src;
+//   validateForm(updateAvatarForm, validationConfig);
+// }
+//
+// // Обработчик отправки формы добавления карточки
+// const submitAddCardForm = event => {
+//   event.preventDefault();
+//   const card = {
+//     name: addCardNameInput.value,
+//     link: addCardLinkInput.value,
+//   };
+//   addCardSubmitButton.textContent = "Сохранение...";
+//   addCard(card)
+//     .then(card => {
+//       const cardElement = createCardElement(card);
+//       cardContainer.prepend(cardElement);
+//       getCards().unshift(card);
+//       addCardForm.reset();
+//       validateForm(addCardForm, validationConfig);
+//       closePopup(popups.addCardPopup);
+//     })
+//     .catch(err => console.log(err));
+// }
+// // Обработчик отправки формы обновления аватара
+// const submitUpdateAvatarForm = event => {
+//   event.preventDefault();
+//   updateAvatarSubmitButton.textContent = "Сохранение...";
+//   updateAvatar(updateAvatarLinkInput.value)
+//     .then(user => {
+//       setUser(user);
+//       closePopup(popups.updateAvatarPopup);
+//     })
+//     .catch(err => console.log(err));
+// }
+//
+// // Обработчик нажатия на кнопку добавления карточки
+// const handleAddCardButtonClick = () => {
+//   addCardSubmitButton.textContent = "Сохранить";
+//   openPopup(popups.addCardPopup);
+// }
+//
+// // Обработчик отправки формы удаления карточки
+// const submitDeleteCardForm = event => {
+//   event.preventDefault();
+//   deleteCard(getDeleteCardId())
+//     .then(() => {
+//       const cardElements = Array.from(cardContainer.querySelectorAll(".card")); // Получение массива всех элементов карточки
+//       const deletedCardIndex = getCards().findIndex(card => card._id === getDeleteCardId()); // Получение индекса удаляемой карточки в массиве объектов карточек
+//       cardElements[deletedCardIndex].remove(); // Удаление элемента карточки
+//       closePopup(popups.deleteCardPopup);
+//     })
+//     .catch(err => console.log(err));
+// }
+//
+//
+// editProfileButton.addEventListener("click", handleEditProfileButtonClick);
+// editProfileForm.addEventListener("submit", submitEditProfileForm);
+//
+// addCardButton.addEventListener("click", handleAddCardButtonClick);
+//
+// addCardForm.addEventListener("submit", submitAddCardForm);
+//
+// deleteCardForm.addEventListener("submit", submitDeleteCardForm);
+//
+// setPopupOverlayListeners();
+//
+// profileAvatarButton.addEventListener("click", handleUpdateAvatarButtonClick);
+//
+// updateAvatarForm.addEventListener("submit", submitUpdateAvatarForm);
+//
+// enableValidation(validationConfig);
+//
+// Promise.all([fetchUserInfo(), fetchCards()])
+//   .then(([fetchedUser, fetchedCards]) => {
+//     setUser(fetchedUser);
+//     setCards(fetchedCards);
+//   })
+//   .catch(err => console.log(err));
 

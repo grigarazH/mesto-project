@@ -14,6 +14,8 @@ export const apiConfig = {
   },
 };
 
+export const cardTemplateSelector = "#card_template";
+
 export const profileNameEl = document.querySelector(".profile__name");
 export const profileSubtitleEl = document.querySelector(".profile__subtitle");
 export const profileAvatar = document.querySelector(".profile__avatar");
