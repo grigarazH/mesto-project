@@ -35,7 +35,30 @@ const addCardLinkInput = addCardForm.elements["add-card-link"];
 const api = new Api(apiConfig);
 const cardSection = new Section({
   renderer: card => {
-    const cardObject = new Card(card, cardTemplateSelector, )
+    const cardElement = new Card(card, cardTemplateSelector, () => {
+      const photoPopup = new PopupWithImage(".popup_type_photo");
+      photoPopup.open();
+    }, (likeButton, likeAmount) => {
+      if(!likeButton.classList.contains("card__like-button_active")) {
+        api.likeCard(card._id)
+          .then(card => {
+            likeAmount.textContent = card.likes.length;
+            likeButton.classList.add("card__like-button_active");
+          })
+          .catch(err => console.log(err));
+      } else {
+        api.dislikeCard(card._id)
+          .then(card => {
+            likeAmount.textContent = card.likes.length;
+            likeButton.classList.remove("card__like-button_active");
+          })
+          .catch(err => console.log(err));
+      }
+    }, () => {
+      setDeleteCardId(card._id);
+      deleteCardPopup.open();
+    });
+    return cardElement.generate()
   },
 }, ".cards");
 
@@ -67,31 +90,7 @@ const addCardPopup = new PopupWithForm(".popup_type_add-card", inputValues => {
   addCardSubmitButton.textContent = "Сохранение...";
   addCard(card)
     .then(card => {
-      const cardObject = new Card(card, cardTemplateSelector, () => {
-        const photoPopup = new PopupWithImage(".popup_type_photo");
-        photoPopup.open();
-      }, (likeButton, likeAmount) => {
-        if(!likeButton.classList.contains("card__like-button_active")) {
-          api.likeCard(card._id)
-            .then(card => {
-              likeAmount.textContent = card.likes.length;
-              likeButton.classList.add("card__like-button_active");
-            })
-            .catch(err => console.log(err));
-        } else {
-          api.dislikeCard(card._id)
-            .then(card => {
-              likeAmount.textContent = card.likes.length;
-              likeButton.classList.remove("card__like-button_active");
-            })
-            .catch(err => console.log(err));
-        }
-      }, () => {
-        setDeleteCardId(card._id);
-        deleteCardPopup.open();
-      })
-      const cardElement = createCardElement(card);
-      cardContainer.prepend(cardElement);
+      cardSection.addItem(card);
       getCards().unshift(card);
       addCardForm.reset();
       validateForm(addCardForm, validationConfig);

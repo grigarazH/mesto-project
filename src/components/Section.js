@@ -11,4 +11,10 @@ class Section {
       this._element.append(itemElement);
     });
   }
+
+  addItem(item) {
+    const itemElement = this._renderer(item);
+    this._element = document.querySelector(this._selector);
+    this._element.prepend(itemElement);
+  }
 }
