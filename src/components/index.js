@@ -34,11 +34,10 @@ const addCardLinkInput = addCardForm.elements["add-card-link"];
 
 const api = new Api(apiConfig);
 const cardSection = new Section({
-  items: getCards(),
   renderer: card => {
     const cardObject = new Card(card, cardTemplateSelector, )
   },
-});
+}, ".cards");
 
 const deleteCardPopup = new PopupWithForm(".popup_type_delete-card", inputValues => {
   api.deleteCard(getDeleteCardId())
