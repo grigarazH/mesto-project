@@ -8,6 +8,7 @@ import {getCards, getDeleteCardId, setDeleteCardId, setUser} from "./utils";
 import PopupWithForm from "./PopupWithForm";
 import PopupWithImage from "./PopupWithImage";
 import UserInfo from "./UserInfo";
+import {isThenable} from "@babel/core/lib/gensync-utils/async";
 
 const editProfileButton = document.querySelector(".profile__edit-button");
 const addCardButton = document.querySelector(".profile__add-button");
@@ -113,6 +114,12 @@ deleteCardFormValidator.enableValidation();
 addCardFormValidator.enableValidation();
 updateAvatarFormValidator.enableValidation();
 
+Promise.all([api.fetchUserInfo(), api.fetchCards()])
+  .then(([fetchedUser, fetchedCards]) => {
+    userInfo.getUserInfo(fetchedUser);
+    userInfo.setUserInfo(fetchedUser);
+    cardSection.renderItems(fetchedCards);
+  })
 // // Обработчик отправки формы редактирования профиля
 // const submitEditProfileForm = event => {
 //   event.preventDefault();
