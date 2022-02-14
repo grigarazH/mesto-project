@@ -79,13 +79,12 @@ const addCardPopup = new PopupWithForm(".popup_type_add-card", inputValues => {
     link: addCardLinkInput.value,
   };
   addCardSubmitButton.textContent = "Сохранение...";
-  addCard(card)
+  api.addCard(card)
     .then(card => {
       cardSection.addItem(card);
       getCards().unshift(card);
-      addCardForm.reset();
-      validateForm(addCardForm, validationConfig);
-      closePopup(popups.addCardPopup);
+      addCardFormValidator.validateForm();
+      addCardPopup.close();
     })
     .catch(err => console.log(err));
 });
