@@ -1,14 +1,13 @@
-import Card, {cardContainer} from './Card';
+import Card from './Card';
 import '../pages/index.css';
 import {addCardForm, closePopup, editProfileForm, popups, updateAvatarForm,} from "./modal";
 import {apiConfig, cardTemplateSelector, validationConfig} from "./constants";
-import FormValidator, {validateForm} from "./FormValidator";
-import Api, {addCard, editProfile, updateAvatar} from "./Api";
+import FormValidator from "./FormValidator";
+import Api from "./Api";
 import {getCards, getDeleteCardId, setDeleteCardId, setUser} from "./utils";
 import PopupWithForm from "./PopupWithForm";
 import PopupWithImage from "./PopupWithImage";
 import UserInfo from "./UserInfo";
-import {isThenable} from "@babel/core/lib/gensync-utils/async";
 
 const editProfileButton = document.querySelector(".profile__edit-button");
 const addCardButton = document.querySelector(".profile__add-button");
@@ -62,7 +61,7 @@ const deleteCardPopup = new PopupWithForm(".popup_type_delete-card", inputValues
       const cardElements = Array.from(cardContainer.querySelectorAll(".card")); // Получение массива всех элементов карточки
       const deletedCardIndex = getCards().findIndex(card => card._id === getDeleteCardId()); // Получение индекса удаляемой карточки в массиве объектов карточек
       cardElements[deletedCardIndex].remove(); // Удаление элемента карточки
-      closePopup(popups.deleteCardPopup);
+      deleteCardPopup.close();
     })
     .catch(err => console.log(err));
 });
@@ -91,9 +90,9 @@ const addCardPopup = new PopupWithForm(".popup_type_add-card", inputValues => {
 
 const updateAvatarPopup = new PopupWithForm(".popup_type_update_avatar", inputValues => {
   updateAvatarSubmitButton.textContent = "Сохранение...";
-  updateAvatar(inputValues["update-avatar-link"])
+  api.updateAvatar(inputValues["update-avatar-link"])
     .then(user => {
-      setUser(user);
+      userInfo.setUserInfo(user);
       updateAvatarPopup.close();
     })
     .catch(err => console.log(err));
