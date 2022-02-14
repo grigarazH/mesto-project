@@ -113,6 +113,15 @@ deleteCardFormValidator.enableValidation();
 addCardFormValidator.enableValidation();
 updateAvatarFormValidator.enableValidation();
 
+
+const handleEditProfileButtonClick = () => {
+  editProfileSubmitButton.textContent = "Сохранить";
+  editProfilePopup.open();
+  editProfileNameInput.value = userInfo.getUserInfo();
+  editProfileSubtitleInput.value = userInfo.getUserInfo();
+  editProfileFormValidator.validateForm();
+}
+
 Promise.all([userInfo.fetchUserInfo(), api.fetchCards()])
   .then(([fetchedUser, fetchedCards]) => {
     userInfo.render();
@@ -131,13 +140,6 @@ Promise.all([userInfo.fetchUserInfo(), api.fetchCards()])
 // }
 //
 // Обработчик нажатия на кнопку редактирования профиля
-const handleEditProfileButtonClick = () => {
-  editProfileSubmitButton.textContent = "Сохранить";
-  editProfilePopup.open();
-  editProfileNameInput.value = profileNameEl.textContent;
-  editProfileSubtitleInput.value = profileSubtitleEl.textContent;
-  validateForm(editProfileForm, validationConfig);
-}
 
 // // Обработчик нажатия на кнопку обновления аватара
 // const handleUpdateAvatarButtonClick = () => {
