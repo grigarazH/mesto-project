@@ -69,11 +69,8 @@ const deleteCardPopup = new PopupWithForm(".popup_type_delete-card", inputValues
 
 const editProfilePopup = new PopupWithForm(".popup_type_edit-profile", inputValues => {
   editProfileSubmitButton.textContent = "Сохранение...";
-  editProfile(inputValues["edit-profile-name"], inputValues["edit-profile-subtitle"])
-    .then(changedUser => {
-      setUser(changedUser);
-      closePopup(popups.editProfilePopup);
-    }).catch(err => console.log(err));
+  userInfo.setUserInfo({name: inputValues["edit-profile-name"], about: inputValues["edit-profile-subtitle"]});
+  editProfilePopup.close();
 });
 
 const addCardPopup = new PopupWithForm(".popup_type_add-card", inputValues => {
@@ -128,17 +125,6 @@ Promise.all([userInfo.fetchUserInfo(), api.fetchCards()])
     cardSection.renderItems(fetchedCards);
   })
   .catch(err => console.log(err));
-// // Обработчик отправки формы редактирования профиля
-// const submitEditProfileForm = event => {
-//   event.preventDefault();
-//   editProfileSubmitButton.textContent = "Сохранение...";
-//   editProfile(editProfileNameInput.value, editProfileSubtitleInput.value)
-//     .then(changedUser => {
-//       setUser(changedUser);
-//       closePopup(popups.editProfilePopup);
-//     }).catch(err => console.log(err));
-// }
-//
 // Обработчик нажатия на кнопку редактирования профиля
 
 // // Обработчик нажатия на кнопку обновления аватара
