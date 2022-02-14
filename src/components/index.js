@@ -23,11 +23,10 @@ const addCardNameInput = addCardForm.elements["add-card-name"];
 const addCardLinkInput = addCardForm.elements["add-card-link"];
 
 const api = new Api(apiConfig);
-const userInfo = new UserInfo(".profile__name", ".profile__subtitle", ({name, about}) => {
-  api.editProfile(name, about)
-    .then()
-    .catch(err => console.log(err))
-});
+const userInfo = new UserInfo(".profile__name",
+  ".profile__subtitle",
+  () => api.fetchUserInfo(),
+  ({name, about}) => api.editProfile(name, about));
 const cardSection = new Section({
   renderer: card => {
     const cardElement = new Card(card, cardTemplateSelector, () => {
@@ -114,12 +113,12 @@ deleteCardFormValidator.enableValidation();
 addCardFormValidator.enableValidation();
 updateAvatarFormValidator.enableValidation();
 
-Promise.all([api.fetchUserInfo(), api.fetchCards()])
+Promise.all([userInfo.fetchUserInfo(), api.fetchCards()])
   .then(([fetchedUser, fetchedCards]) => {
-    userInfo.getUserInfo(fetchedUser);
-    userInfo.setUserInfo(fetchedUser);
+    userInfo.render();
     cardSection.renderItems(fetchedCards);
   })
+  .catch(err => console.log(err));
 // // Обработчик отправки формы редактирования профиля
 // const submitEditProfileForm = event => {
 //   event.preventDefault();
@@ -131,15 +130,15 @@ Promise.all([api.fetchUserInfo(), api.fetchCards()])
 //     }).catch(err => console.log(err));
 // }
 //
-// // Обработчик нажатия на кнопку редактирования профиля
-// const handleEditProfileButtonClick = () => {
-//   editProfileSubmitButton.textContent = "Сохранить";
-//   openPopup(popups.editProfilePopup);
-//   editProfileNameInput.value = profileNameEl.textContent;
-//   editProfileSubtitleInput.value = profileSubtitleEl.textContent;
-//   validateForm(editProfileForm, validationConfig);
-// }
-//
+// Обработчик нажатия на кнопку редактирования профиля
+const handleEditProfileButtonClick = () => {
+  editProfileSubmitButton.textContent = "Сохранить";
+  editProfilePopup.open();
+  editProfileNameInput.value = profileNameEl.textContent;
+  editProfileSubtitleInput.value = profileSubtitleEl.textContent;
+  validateForm(editProfileForm, validationConfig);
+}
+
 // // Обработчик нажатия на кнопку обновления аватара
 // const handleUpdateAvatarButtonClick = () => {
 //   updateAvatarSubmitButton.textContent = "Сохранить";
