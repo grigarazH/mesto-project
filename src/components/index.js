@@ -90,7 +90,7 @@ const addCardPopup = new PopupWithForm(".popup_type_add-card", inputValues => {
     .catch(err => console.log(err));
 });
 
-const updateAvatarPopup = new PopupWithForm(".popup_type_update_avatar", inputValues => {
+const updateAvatarPopup = new PopupWithForm(".popup_type_update-avatar", inputValues => {
   updateAvatarSubmitButton.textContent = "Сохранение...";
   api.updateAvatar(inputValues["update-avatar-link"])
     .then(user => {
