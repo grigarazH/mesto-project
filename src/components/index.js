@@ -99,10 +99,11 @@ const updateAvatarPopup = new PopupWithForm(".popup_type_update_avatar", inputVa
     .catch(err => console.log(err));
 })
 
-const editProfileFormValidator = new FormValidator(validationConfig, ".popup_type_edit-profile");
-const deleteCardFormValidator = new FormValidator(validationConfig, ".popup_type_delete-card");
-const addCardFormValidator = new FormValidator(validationConfig, ".popup_type_add-card");
-const updateAvatarFormValidator = new FormValidator(validationConfig, ".popup_type_update-avatar");
+const editProfileFormValidator = new FormValidator(validationConfig, document.querySelector(".popup_type_edit-profile > .popup__container_type_form"));
+const deleteCardFormValidator = new FormValidator(validationConfig, document.querySelector(".popup_type_delete-card > .popup__container_type_form"));
+const addCardFormValidator = new FormValidator(validationConfig, document.querySelector(".popup_type_add-card >" +
+  " .popup__container_type_form"));
+const updateAvatarFormValidator = new FormValidator(validationConfig, document.querySelector(".popup_type_update-avatar > .popup__container_type_form"));
 
 editProfileFormValidator.enableValidation();
 deleteCardFormValidator.enableValidation();
