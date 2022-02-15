@@ -98,7 +98,12 @@ const updateAvatarPopup = new PopupWithForm(".popup_type_update_avatar", inputVa
       updateAvatarPopup.close();
     })
     .catch(err => console.log(err));
-})
+});
+
+editProfilePopup.setEventListeners();
+addCardPopup.setEventListeners();
+deleteCardPopup.setEventListeners();
+updateAvatarPopup.setEventListeners();
 
 const editProfileFormValidator = new FormValidator(validationConfig, document.querySelector(".popup_type_edit-profile > .popup__container_type_form"));
 const deleteCardFormValidator = new FormValidator(validationConfig, document.querySelector(".popup_type_delete-card > .popup__container_type_form"));
@@ -115,8 +120,8 @@ updateAvatarFormValidator.enableValidation();
 const handleEditProfileButtonClick = () => {
   editProfileSubmitButton.textContent = "Сохранить";
   editProfilePopup.open();
-  editProfileNameInput.value = userInfo.getUserInfo();
-  editProfileSubtitleInput.value = userInfo.getUserInfo();
+  editProfileNameInput.value = userInfo.getUserInfo().name;
+  editProfileSubtitleInput.value = userInfo.getUserInfo().about;
   editProfileFormValidator.validateForm();
 }
 
