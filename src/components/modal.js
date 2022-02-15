@@ -1,8 +1,8 @@
 const photoPopup = document.querySelector(".popup_type_photo");
 const addCardPopup = document.querySelector(".popup_type_add-card");
 const editProfilePopup = document.querySelector(".popup_type_edit-profile");
-const updateAvatarPopup = document.querySelector(".popup_type_update_avatar");
-const deleteCardPopup = document.querySelector(".popup_type_delete_card");
+const updateAvatarPopup = document.querySelector(".popup_type_update-avatar");
+const deleteCardPopup = document.querySelector(".popup_type_delete-card");
 export const photoPopupImage = photoPopup.querySelector(".popup__photo");
 export const photoPopupCaption = photoPopup.querySelector(".popup__photo-caption");
 export const editProfileForm = editProfilePopup.querySelector(".popup__container");

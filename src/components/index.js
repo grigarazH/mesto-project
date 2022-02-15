@@ -1,9 +1,9 @@
-import Card, {cardContainer} from './Card';
+import Card from './Card';
 import '../pages/index.css';
 import {addCardForm, closePopup, editProfileForm, popups, updateAvatarForm,} from "./modal";
 import {apiConfig, cardTemplateSelector, validationConfig} from "./constants";
-import FormValidator, {validateForm} from "./FormValidator";
-import Api, {addCard, editProfile, updateAvatar} from "./Api";
+import FormValidator from "./FormValidator";
+import Api from "./Api";
 import {getCards, getDeleteCardId, setDeleteCardId, setUser} from "./utils";
 import PopupWithForm from "./PopupWithForm";
 import PopupWithImage from "./PopupWithImage";

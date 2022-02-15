@@ -1,5 +1,4 @@
 import {profileAvatar, profileNameEl, profileSubtitleEl} from "./constants";
-import {cardContainer, createCardElement} from "./Card";
 
 let user, cards, deleteCardId;
 
@@ -25,9 +24,6 @@ export const getCards = () => cards;
 
 // Запись локальной информации о карточках
 export const setCards = fetchedCards => {
-  cardContainer.textContent = "";
   cards = fetchedCards
-  cards.forEach(card => {
-    cardContainer.appendChild(createCardElement(card));
-  });
-}
+};
+
