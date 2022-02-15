@@ -26,4 +26,3 @@ export const getCards = () => cards;
 export const setCards = fetchedCards => {
   cards = fetchedCards
 };
-

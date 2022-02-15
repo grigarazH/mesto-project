@@ -8,7 +8,6 @@ import {getCards, getDeleteCardId, setDeleteCardId, setUser} from "./utils";
 import PopupWithForm from "./PopupWithForm";
 import PopupWithImage from "./PopupWithImage";
 import UserInfo from "./UserInfo";
-import {isThenable} from "@babel/core/lib/gensync-utils/async";
 
 const editProfileButton = document.querySelector(".profile__edit-button");
 const addCardButton = document.querySelector(".profile__add-button");
@@ -62,18 +61,15 @@ const deleteCardPopup = new PopupWithForm(".popup_type_delete-card", inputValues
       const cardElements = Array.from(cardContainer.querySelectorAll(".card")); // Получение массива всех элементов карточки
       const deletedCardIndex = getCards().findIndex(card => card._id === getDeleteCardId()); // Получение индекса удаляемой карточки в массиве объектов карточек
       cardElements[deletedCardIndex].remove(); // Удаление элемента карточки
-      closePopup(popups.deleteCardPopup);
+      deleteCardPopup.close();
     })
     .catch(err => console.log(err));
 });
 
 const editProfilePopup = new PopupWithForm(".popup_type_edit-profile", inputValues => {
   editProfileSubmitButton.textContent = "Сохранение...";
-  editProfile(inputValues["edit-profile-name"], inputValues["edit-profile-subtitle"])
-    .then(changedUser => {
-      setUser(changedUser);
-      closePopup(popups.editProfilePopup);
-    }).catch(err => console.log(err));
+  userInfo.setUserInfo({name: inputValues["edit-profile-name"], about: inputValues["edit-profile-subtitle"]});
+  editProfilePopup.close();
 });
 
 const addCardPopup = new PopupWithForm(".popup_type_add-card", inputValues => {
@@ -82,22 +78,21 @@ const addCardPopup = new PopupWithForm(".popup_type_add-card", inputValues => {
     link: addCardLinkInput.value,
   };
   addCardSubmitButton.textContent = "Сохранение...";
-  addCard(card)
+  api.addCard(card)
     .then(card => {
       cardSection.addItem(card);
       getCards().unshift(card);
-      addCardForm.reset();
-      validateForm(addCardForm, validationConfig);
-      closePopup(popups.addCardPopup);
+      addCardFormValidator.validateForm();
+      addCardPopup.close();
     })
     .catch(err => console.log(err));
 });
 
 const updateAvatarPopup = new PopupWithForm(".popup_type_update_avatar", inputValues => {
   updateAvatarSubmitButton.textContent = "Сохранение...";
-  updateAvatar(inputValues["update-avatar-link"])
+  api.updateAvatar(inputValues["update-avatar-link"])
     .then(user => {
-      setUser(user);
+      userInfo.setUserInfo(user);
       updateAvatarPopup.close();
     })
     .catch(err => console.log(err));
@@ -113,31 +108,22 @@ deleteCardFormValidator.enableValidation();
 addCardFormValidator.enableValidation();
 updateAvatarFormValidator.enableValidation();
 
+
+const handleEditProfileButtonClick = () => {
+  editProfileSubmitButton.textContent = "Сохранить";
+  editProfilePopup.open();
+  editProfileNameInput.value = userInfo.getUserInfo();
+  editProfileSubtitleInput.value = userInfo.getUserInfo();
+  editProfileFormValidator.validateForm();
+}
+
 Promise.all([userInfo.fetchUserInfo(), api.fetchCards()])
   .then(([fetchedUser, fetchedCards]) => {
     userInfo.render();
     cardSection.renderItems(fetchedCards);
   })
   .catch(err => console.log(err));
-// // Обработчик отправки формы редактирования профиля
-// const submitEditProfileForm = event => {
-//   event.preventDefault();
-//   editProfileSubmitButton.textContent = "Сохранение...";
-//   editProfile(editProfileNameInput.value, editProfileSubtitleInput.value)
-//     .then(changedUser => {
-//       setUser(changedUser);
-//       closePopup(popups.editProfilePopup);
-//     }).catch(err => console.log(err));
-// }
-//
 // Обработчик нажатия на кнопку редактирования профиля
-const handleEditProfileButtonClick = () => {
-  editProfileSubmitButton.textContent = "Сохранить";
-  editProfilePopup.open();
-  editProfileNameInput.value = profileNameEl.textContent;
-  editProfileSubtitleInput.value = profileSubtitleEl.textContent;
-  validateForm(editProfileForm, validationConfig);
-}
 
 // // Обработчик нажатия на кнопку обновления аватара
 // const handleUpdateAvatarButtonClick = () => {
