@@ -87,9 +87,10 @@ export default class Card {
 
   generate() {
     this._element = this._getElement();
-    this._element.querySelector('.card__title').textContent = this._card.title;
+    this._element.querySelector('.card__title').textContent = this._card.name;
     this._element.querySelector('.card__image').src = this._card.link;
-    this._element.querySelector('.card__image').alt = this._card.title;
+    this._element.querySelector('.card__image').alt = this._card.name;
+    this._element.querySelector('.card__like-amount').textContent = this._card.likes.length;
     this._setEventListeners();
     return this._element;
   }
