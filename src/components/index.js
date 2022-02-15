@@ -1,4 +1,5 @@
 import Card from './Card';
+import Section from "./Section";
 import '../pages/index.css';
 import {addCardForm, closePopup, editProfileForm, popups, updateAvatarForm,} from "./modal";
 import {apiConfig, cardTemplateSelector, validationConfig} from "./constants";
