@@ -70,6 +70,7 @@ const deleteCardPopup = new PopupWithForm(".popup_type_delete-card", inputValues
 
 const editProfilePopup = new PopupWithForm(".popup_type_edit-profile", inputValues => {
   editProfileSubmitButton.textContent = "Сохранение...";
+  console.log(inputValues);
   userInfo.setUserInfo({name: inputValues["edit-profile-name"], about: inputValues["edit-profile-subtitle"]});
   editProfilePopup.close();
 });
