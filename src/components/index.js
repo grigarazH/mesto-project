@@ -30,7 +30,8 @@ const userInfo = new UserInfo(".profile__name",
 const cardSection = new Section({
   renderer: card => {
     const cardElement = new Card(card, cardTemplateSelector, () => {
-      const photoPopup = new PopupWithImage(".popup_type_photo");
+      const photoPopup = new PopupWithImage(".popup_type_photo", card);
+      photoPopup.setEventListeners();
       photoPopup.open();
     }, (likeButton, likeAmount) => {
       if (!likeButton.classList.contains("card__like-button_active")) {

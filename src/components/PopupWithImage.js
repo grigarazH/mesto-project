@@ -10,7 +10,7 @@ export default class PopupWithImage extends Popup{
     const photo = this._popup.querySelector('.popup__photo');
     const photoCaption = this._popup.querySelector('.popup__photo-caption');
     photo.src = this._card.link;
-    photoCaption.textContent = this._card.title;
-    photo.alt = this._card.title;
+    photoCaption.textContent = this._card.name;
+    photo.alt = this._card.name;
   }
 }

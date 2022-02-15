@@ -13,14 +13,13 @@ export default class Popup {
 
   close() {
     this._popup = document.querySelector(this._selector)
-    this._popup.classList.add("popup_remove");
-    document.addEventListener("keydown", this._handleEscClose);
+    this._popup.classList.remove("popup_opened");
+    document.addEventListener("keydown", (event) => this._handleEscClose(event));
   }
 
   _handleEscClose(event) {
     if (event.key === "Escape") {
-      const openedPopup = document.querySelector(".popup_opened");
-      closePopup(openedPopup);
+      this.close();
     }
   }
 
