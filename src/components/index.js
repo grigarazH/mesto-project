@@ -2,7 +2,7 @@ import Card from './Card';
 import Section from "./Section";
 import '../pages/index.css';
 import {addCardForm, closePopup, editProfileForm, popups, updateAvatarForm,} from "./modal";
-import {apiConfig, cardTemplateSelector, validationConfig} from "./constants";
+import {apiConfig, cardTemplateSelector, profileAvatar, validationConfig} from "./constants";
 import FormValidator from "./FormValidator";
 import Api from "./Api";
 import {getCards, getDeleteCardId, setDeleteCardId, setUser} from "./utils";
@@ -120,21 +120,28 @@ const handleEditProfileButtonClick = () => {
   editProfileFormValidator.validateForm();
 }
 
+const handleUpdateAvatarButtonClick = () => {
+  updateAvatarSubmitButton.textContent = "Сохранить";
+  updateAvatarPopup.open();
+  updateAvatarLinkInput.value = profileAvatar.src;
+  updateAvatarFormValidator.validateForm();
+}
+
+const handleAddCardButtonClick = () => {
+  addCardSubmitButton.textContent = "Сохранить";
+  addCardPopup.open();
+}
+
+editProfileButton.addEventListener("click", handleEditProfileButtonClick);
+profileAvatarButton.addEventListener("click", handleUpdateAvatarButtonClick);
+addCardButton.addEventListener("click", handleAddCardButtonClick);
+
 Promise.all([userInfo.fetchUserInfo(), api.fetchCards()])
   .then(([fetchedUser, fetchedCards]) => {
     userInfo.render();
     cardSection.renderItems(fetchedCards);
   })
   .catch(err => console.log(err));
-// Обработчик нажатия на кнопку редактирования профиля
-
-// // Обработчик нажатия на кнопку обновления аватара
-// const handleUpdateAvatarButtonClick = () => {
-//   updateAvatarSubmitButton.textContent = "Сохранить";
-//   openPopup(popups.updateAvatarPopup);
-//   updateAvatarLinkInput.value = profileAvatar.src;
-//   validateForm(updateAvatarForm, validationConfig);
-// }
 //
 // // Обработчик отправки формы добавления карточки
 // const submitAddCardForm = event => {
@@ -168,10 +175,7 @@ Promise.all([userInfo.fetchUserInfo(), api.fetchCards()])
 // }
 //
 // // Обработчик нажатия на кнопку добавления карточки
-// const handleAddCardButtonClick = () => {
-//   addCardSubmitButton.textContent = "Сохранить";
-//   openPopup(popups.addCardPopup);
-// }
+
 //
 // // Обработчик отправки формы удаления карточки
 // const submitDeleteCardForm = event => {
