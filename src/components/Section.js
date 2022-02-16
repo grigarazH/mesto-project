@@ -17,4 +17,10 @@ export default class Section {
     this._element = document.querySelector(this._selector);
     this._element.prepend(itemElement);
   }
+
+  delete(index, selector) {
+    this._element = document.querySelector(this._selector);
+    const elements = this._element.querySelectorAll(selector);
+    elements[index].remove();
+  }
 }

@@ -5,7 +5,7 @@ import {addCardForm, closePopup, editProfileForm, popups, updateAvatarForm,} fro
 import {apiConfig, cardTemplateSelector, profileAvatar, validationConfig} from "./constants";
 import FormValidator from "./FormValidator";
 import Api from "./Api";
-import {getCards, getDeleteCardId, setDeleteCardId, setUser} from "./utils";
+import {getCards, getDeleteCardId, setCards, setDeleteCardId, setUser} from "./utils";
 import PopupWithForm from "./PopupWithForm";
 import PopupWithImage from "./PopupWithImage";
 import UserInfo from "./UserInfo";
@@ -61,9 +61,8 @@ const cardSection = new Section({
 const deleteCardPopup = new PopupWithForm(".popup_type_delete-card", inputValues => {
   api.deleteCard(getDeleteCardId())
     .then(() => {
-      const cardElements = Array.from(cardContainer.querySelectorAll(".card")); // Получение массива всех элементов карточки
       const deletedCardIndex = getCards().findIndex(card => card._id === getDeleteCardId()); // Получение индекса удаляемой карточки в массиве объектов карточек
-      cardElements[deletedCardIndex].remove(); // Удаление элемента карточки
+      cardSection.delete(deletedCardIndex, ".card");
       deleteCardPopup.close();
     })
     .catch(err => console.log(err));
@@ -146,6 +145,7 @@ addCardButton.addEventListener("click", handleAddCardButtonClick);
 Promise.all([userInfo.fetchUserInfo(), api.fetchCards()])
   .then(([fetchedUser, fetchedCards]) => {
     userInfo.render();
+    setCards(fetchedCards);
     cardSection.renderItems(fetchedCards);
   })
   .catch(err => console.log(err));
