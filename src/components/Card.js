@@ -85,8 +85,18 @@ export default class Card {
     deleteButton.addEventListener('click', () => this._handleDeleteClick());
   }
 
+  showDeleteButton(show) {
+    this._show = show;
+  }
+
   generate() {
     this._element = this._getElement();
+    const deleteButton = this._element.querySelector('.card__delete-button');
+    if (this._show) {
+      deleteButton.classList.remove("card__delete-button_hidden");
+    } else {
+      deleteButton.classList.add("card__delete-button_hidden");
+    }
     this._element.querySelector('.card__title').textContent = this._card.name;
     this._element.querySelector('.card__image').src = this._card.link;
     this._element.querySelector('.card__image').alt = this._card.name;
