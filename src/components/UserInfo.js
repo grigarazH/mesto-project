@@ -1,7 +1,8 @@
 export default class UserInfo {
-  constructor(nameSelector, aboutSelector, fetchUserCallback,setUserCallback) {
+  constructor(nameSelector, aboutSelector, avatarSelector, fetchUserCallback,setUserCallback) {
     this._nameSelector = nameSelector;
     this._aboutSelector = aboutSelector;
+    this._avatarSelector = avatarSelector;
     this._setUserCallback = setUserCallback;
     this._fetchUserCallback = fetchUserCallback;
   }
@@ -19,6 +20,8 @@ export default class UserInfo {
   render(){
     const nameElement = document.querySelector(this._nameSelector);
     const aboutElement = document.querySelector(this._aboutSelector);
+    const avatarElement = document.querySelector(this._avatarSelector);
+    avatarElement.src = this._user.avatar;
     nameElement.textContent = this._user.name;
     aboutElement.textContent = this._user.about;
   }

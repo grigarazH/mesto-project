@@ -25,6 +25,7 @@ const addCardLinkInput = addCardForm.elements["add-card-link"];
 const api = new Api(apiConfig);
 const userInfo = new UserInfo(".profile__name",
   ".profile__subtitle",
+  ".profile__avatar",
   () => api.fetchUserInfo(),
   ({name, about}) => api.editProfile(name, about));
 const cardSection = new Section({
