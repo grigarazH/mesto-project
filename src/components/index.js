@@ -53,8 +53,7 @@ const cardSection = new Section({
     }, () => {
       setDeleteCardId(card._id);
       deleteCardPopup.open();
-    });
-    cardElement.showDeleteButton(userInfo.getUserInfo()._id === card.owner._id);
+    }, card.likes.some(likeUser => likeUser._id === userInfo.getUserInfo()._id),userInfo.getUserInfo()._id === card.owner._id);
     return cardElement.generate();
   },
 }, ".cards");
