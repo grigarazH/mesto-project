@@ -1,5 +1,6 @@
 import Popup from "./Popup";
 
+// Класс модального окна с формой. Конструктор ринимает селектор модального окна и колбек-функцию отправки формы
 export default class PopupWithForm extends Popup {
   constructor(selector, submitCallback) {
     super(selector);
@@ -12,6 +13,7 @@ export default class PopupWithForm extends Popup {
     super.close();
   }
 
+  // Получает значения полей ввода
   _getInputValues() {
     const inputValues = {};
     this._popup = document.querySelector(this._selector);

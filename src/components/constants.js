@@ -6,6 +6,7 @@ export const validationConfig = {
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__error_active',
 }
+// Объект конфигурации API
 export const apiConfig = {
   baseUrl: 'https://mesto.nomoreparties.co/v1/plus-cohort-6',
   headers: {
