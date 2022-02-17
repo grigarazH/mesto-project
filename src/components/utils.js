@@ -1,17 +1,4 @@
-import {profileAvatar, profileNameEl, profileSubtitleEl} from "./constants";
-
-let user, cards, deleteCardId;
-
-// Получение локальной информации о пользователе
-export const getUser = () => user;
-
-// Запись локальной информации о пользователе
-export const setUser = newUser => {
-  user = newUser;
-  profileNameEl.textContent = user.name;
-  profileSubtitleEl.textContent = user.about;
-  profileAvatar.src = user.avatar;
-}
+let cards, deleteCardId;
 
 // Получение id удаляемой карточки
 export const getDeleteCardId = () => deleteCardId;

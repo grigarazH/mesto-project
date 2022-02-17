@@ -1,23 +1,29 @@
 import Card from './Card';
 import Section from "./Section";
 import '../pages/index.css';
-import {addCardForm, closePopup, editProfileForm, popups, updateAvatarForm,} from "./modal";
-import {apiConfig, cardTemplateSelector, profileAvatar, validationConfig} from "./constants";
+import {apiConfig, cardTemplateSelector, validationConfig} from "./constants";
 import FormValidator from "./FormValidator";
 import Api from "./Api";
-import {getCards, getDeleteCardId, setCards, setDeleteCardId, setUser} from "./utils";
+import {getCards, getDeleteCardId, setCards, setDeleteCardId} from "./utils";
 import PopupWithForm from "./PopupWithForm";
 import PopupWithImage from "./PopupWithImage";
 import UserInfo from "./UserInfo";
 
+const profileAvatar = document.querySelector(".profile__avatar");
+const addCardPopupElement = document.querySelector(".popup_type_add-card");
+const editProfilePopupElement = document.querySelector(".popup_type_edit-profile");
+const updateAvatarPopupElement = document.querySelector(".popup_type_update-avatar");
+const editProfileForm = editProfilePopupElement.querySelector(".popup__container");
+const addCardForm = addCardPopupElement.querySelector(".popup__container");
+const updateAvatarForm = updateAvatarPopupElement.querySelector(".popup__container");
 const editProfileButton = document.querySelector(".profile__edit-button");
 const addCardButton = document.querySelector(".profile__add-button");
 const profileAvatarButton = document.querySelector(".profile__avatar-button");
 const editProfileNameInput = editProfileForm.elements["edit-profile-name"];
 const editProfileSubtitleInput = editProfileForm.elements["edit-profile-subtitle"];
 const editProfileSubmitButton = editProfileForm.querySelector(".popup__submit");
-const addCardSubmitButton = popups.addCardPopup.querySelector(".popup__submit");
-const updateAvatarSubmitButton = popups.updateAvatarPopup.querySelector(".popup__submit");
+const addCardSubmitButton = addCardPopupElement.querySelector(".popup__submit");
+const updateAvatarSubmitButton = updateAvatarPopupElement.querySelector(".popup__submit");
 const updateAvatarLinkInput = updateAvatarForm.elements["update-avatar-link"];
 const addCardNameInput = addCardForm.elements["add-card-name"];
 const addCardLinkInput = addCardForm.elements["add-card-link"];
@@ -53,7 +59,7 @@ const cardSection = new Section({
     }, () => {
       setDeleteCardId(card._id);
       deleteCardPopup.open();
-    }, card.likes.some(likeUser => likeUser._id === userInfo.getUserInfo()._id),userInfo.getUserInfo()._id === card.owner._id);
+    }, card.likes.some(likeUser => likeUser._id === userInfo.getUserInfo()._id), userInfo.getUserInfo()._id === card.owner._id);
     return cardElement.generate();
   },
 }, ".cards");
@@ -149,76 +155,3 @@ Promise.all([userInfo.fetchUserInfo(), api.fetchCards()])
     cardSection.renderItems(fetchedCards);
   })
   .catch(err => console.log(err));
-//
-// // Обработчик отправки формы добавления карточки
-// const submitAddCardForm = event => {
-//   event.preventDefault();
-//   const card = {
-//     name: addCardNameInput.value,
-//     link: addCardLinkInput.value,
-//   };
-//   addCardSubmitButton.textContent = "Сохранение...";
-//   addCard(card)
-//     .then(card => {
-//       const cardElement = createCardElement(card);
-//       cardContainer.prepend(cardElement);
-//       getCards().unshift(card);
-//       addCardForm.reset();
-//       validateForm(addCardForm, validationConfig);
-//       closePopup(popups.addCardPopup);
-//     })
-//     .catch(err => console.log(err));
-// }
-// // Обработчик отправки формы обновления аватара
-// const submitUpdateAvatarForm = event => {
-//   event.preventDefault();
-//   updateAvatarSubmitButton.textContent = "Сохранение...";
-//   updateAvatar(updateAvatarLinkInput.value)
-//     .then(user => {
-//       setUser(user);
-//       closePopup(popups.updateAvatarPopup);
-//     })
-//     .catch(err => console.log(err));
-// }
-//
-// // Обработчик нажатия на кнопку добавления карточки
-
-//
-// // Обработчик отправки формы удаления карточки
-// const submitDeleteCardForm = event => {
-//   event.preventDefault();
-//   deleteCard(getDeleteCardId())
-//     .then(() => {
-//       const cardElements = Array.from(cardContainer.querySelectorAll(".card")); // Получение массива всех элементов карточки
-//       const deletedCardIndex = getCards().findIndex(card => card._id === getDeleteCardId()); // Получение индекса удаляемой карточки в массиве объектов карточек
-//       cardElements[deletedCardIndex].remove(); // Удаление элемента карточки
-//       closePopup(popups.deleteCardPopup);
-//     })
-//     .catch(err => console.log(err));
-// }
-//
-//
-// editProfileButton.addEventListener("click", handleEditProfileButtonClick);
-// editProfileForm.addEventListener("submit", submitEditProfileForm);
-//
-// addCardButton.addEventListener("click", handleAddCardButtonClick);
-//
-// addCardForm.addEventListener("submit", submitAddCardForm);
-//
-// deleteCardForm.addEventListener("submit", submitDeleteCardForm);
-//
-// setPopupOverlayListeners();
-//
-// profileAvatarButton.addEventListener("click", handleUpdateAvatarButtonClick);
-//
-// updateAvatarForm.addEventListener("submit", submitUpdateAvatarForm);
-//
-// enableValidation(validationConfig);
-//
-// Promise.all([fetchUserInfo(), fetchCards()])
-//   .then(([fetchedUser, fetchedCards]) => {
-//     setUser(fetchedUser);
-//     setCards(fetchedCards);
-//   })
-//   .catch(err => console.log(err));
-
