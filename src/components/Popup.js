@@ -27,8 +27,6 @@ export default class Popup {
 
   // Подключает обработчики событий модального окна
   setEventListeners() {
-    const popupCloseButton = this._popup.querySelector('.popup__close-button');
-    popupCloseButton.addEventListener('click', () => this.close());
     this._popup.addEventListener("mousedown", e => {
       if (e.target.classList.contains("popup") || e.target.classList.contains("popup__close-button")) {
         this.close();
