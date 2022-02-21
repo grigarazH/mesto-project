@@ -109,37 +109,38 @@ editProfilePopup.setEventListeners();
 addCardPopup.setEventListeners();
 deleteCardPopup.setEventListeners();
 updateAvatarPopup.setEventListeners();
+const formValidators = {};
+const enableValidation = (config) => {
+  const formList = Array.from(document.querySelectorAll(config.formSelector))
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(config, formElement);
+    const formName = formElement.getAttribute("name");
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+};
 
-const editProfileFormValidator = new FormValidator(validationConfig, document.querySelector(".popup_type_edit-profile > .popup__container_type_form"));
-const deleteCardFormValidator = new FormValidator(validationConfig, document.querySelector(".popup_type_delete-card > .popup__container_type_form"));
-const addCardFormValidator = new FormValidator(validationConfig, document.querySelector(".popup_type_add-card >" +
-  " .popup__container_type_form"));
-const updateAvatarFormValidator = new FormValidator(validationConfig, document.querySelector(".popup_type_update-avatar > .popup__container_type_form"));
-
-editProfileFormValidator.enableValidation();
-deleteCardFormValidator.enableValidation();
-addCardFormValidator.enableValidation();
-updateAvatarFormValidator.enableValidation();
-
+enableValidation(validationConfig);
 
 const handleEditProfileButtonClick = () => {
   editProfileSubmitButton.textContent = "Сохранить";
   editProfilePopup.open();
   editProfileNameInput.value = userInfo.getUserInfo().name;
   editProfileSubtitleInput.value = userInfo.getUserInfo().about;
-  editProfileFormValidator.validateForm();
+  formValidators["edit_profile"].validateForm();
 }
 
 const handleUpdateAvatarButtonClick = () => {
   updateAvatarSubmitButton.textContent = "Сохранить";
   updateAvatarPopup.open();
   updateAvatarLinkInput.value = profileAvatar.src;
-  updateAvatarFormValidator.validateForm();
+  formValidators["update_profile"].validateForm();
 }
 
 const handleAddCardButtonClick = () => {
   addCardSubmitButton.textContent = "Сохранить";
   addCardPopup.open();
+  formValidators["add_card"].validateForm();
 }
 
 editProfileButton.addEventListener("click", handleEditProfileButtonClick);
