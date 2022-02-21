@@ -131,7 +131,6 @@ updateAvatarPopup.setEventListeners();
 const formValidators = {};
 
 const handleEditProfileButtonClick = () => {
-  editProfileSubmitButton.textContent = "Сохранить";
   editProfilePopup.open();
   editProfileNameInput.value = userInfo.getUserInfo().name;
   editProfileSubtitleInput.value = userInfo.getUserInfo().about;
@@ -139,14 +138,12 @@ const handleEditProfileButtonClick = () => {
 }
 
 const handleUpdateAvatarButtonClick = () => {
-  updateAvatarSubmitButton.textContent = "Сохранить";
   updateAvatarPopup.open();
   updateAvatarLinkInput.value = profileAvatar.src;
   formValidators["update_profile"].validateForm();
 }
 
 const handleAddCardButtonClick = () => {
-  addCardSubmitButton.textContent = "Сохранить";
   addCardPopup.open();
   formValidators["add_card"].validateForm();
 }
