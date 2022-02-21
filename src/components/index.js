@@ -40,19 +40,17 @@ const cardSection = new Section({
       const photoPopup = new PopupWithImage(".popup_type_photo", card);
       photoPopup.setEventListeners();
       photoPopup.open();
-    }, (likeButton, likeAmount) => {
+    }, (cardElement) => {
       if (!likeButton.classList.contains("card__like-button_active")) {
         api.likeCard(card._id)
           .then(card => {
-            likeAmount.textContent = card.likes.length;
-            likeButton.classList.add("card__like-button_active");
+            cardElement.likeCard(card)
           })
           .catch(err => console.log(err));
       } else {
         api.dislikeCard(card._id)
           .then(card => {
-            likeAmount.textContent = card.likes.length;
-            likeButton.classList.remove("card__like-button_active");
+            cardElement.dislikeCard(card)
           })
           .catch(err => console.log(err));
       }
