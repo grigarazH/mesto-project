@@ -1,10 +1,10 @@
 import Card from './Card';
 import Section from "./Section";
 import '../pages/index.css';
-import {apiConfig, cardTemplateSelector, validationConfig} from "./constants";
+import {apiConfig, cardTemplateSelector, validationConfig} from "../utils/constants";
 import FormValidator from "./FormValidator";
 import Api from "./Api";
-import {getCards, getDeleteCardId, setCards, setDeleteCardId} from "./utils";
+import {getCards, getDeleteCardId, setCards, setDeleteCardId} from "../utils/utils";
 import PopupWithForm from "./PopupWithForm";
 import PopupWithImage from "./PopupWithImage";
 import UserInfo from "./UserInfo";
