@@ -2,17 +2,16 @@ import Popup from "./Popup";
 
 // Класс модального окна с картинкой. Конструктор принимает селектор модального окна и объект карточки
 export default class PopupWithImage extends Popup {
-  constructor(selector, card) {
+  constructor(selector) {
     super(selector);
-    this._card = card;
+    this._photo = this._popup.querySelector('.popup__photo');
+    this._photoCaption = this._popup.querySelector('.popup__photo-caption');
   }
 
-  open() {
+  open(card) {
     super.open();
-    const photo = this._popup.querySelector('.popup__photo');
-    const photoCaption = this._popup.querySelector('.popup__photo-caption');
-    photo.src = this._card.link;
-    photoCaption.textContent = this._card.name;
-    photo.alt = this._card.name;
+    this._photo.src = card.link;
+    this._photoCaption.textContent = card.name;
+    this._photo.alt = card.name;
   }
 }
