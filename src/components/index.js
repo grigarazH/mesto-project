@@ -28,6 +28,19 @@ const updateAvatarLinkInput = updateAvatarForm.elements["update-avatar-link"];
 const addCardNameInput = addCardForm.elements["add-card-name"];
 const addCardLinkInput = addCardForm.elements["add-card-link"];
 
+
+const enableValidation = (config) => {
+  const formList = Array.from(document.querySelectorAll(config.formSelector))
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(config, formElement);
+    const formName = formElement.getAttribute("name");
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+};
+
+enableValidation(validationConfig);
+
 const api = new Api(apiConfig);
 const userInfo = new UserInfo(".profile__name",
   ".profile__subtitle",
@@ -75,7 +88,10 @@ const deleteCardPopup = new PopupWithForm(".popup_type_delete-card", inputValues
 const editProfilePopup = new PopupWithForm(".popup_type_edit-profile", inputValues => {
   editProfileSubmitButton.textContent = "Сохранение...";
   console.log(inputValues);
-  userInfo.setUserInfo({name: inputValues["edit-profile-name"], about: inputValues["edit-profile-subtitle"]});
+  userInfo.setUserInfo({name: inputValues["edit-profile-name"], about: inputValues["edit-profile-subtitle"]})
+    .finally(() => {
+      editProfileSubmitButton.textContent = "Сохранить";
+    });
   editProfilePopup.close();
 });
 
@@ -89,7 +105,7 @@ const addCardPopup = new PopupWithForm(".popup_type_add-card", inputValues => {
     .then(card => {
       cardSection.addItem(card);
       getCards().unshift(card);
-      addCardFormValidator.validateForm();
+      formValidators["add_card"].validateForm();
       addCardPopup.close();
     })
     .catch(err => console.log(err));
@@ -99,7 +115,10 @@ const updateAvatarPopup = new PopupWithForm(".popup_type_update-avatar", inputVa
   updateAvatarSubmitButton.textContent = "Сохранение...";
   api.updateAvatar(inputValues["update-avatar-link"])
     .then(user => {
-      userInfo.setUserInfo(user);
+      userInfo.setUserInfo(user)
+        .finally(() => {
+          updateAvatarSubmitButton.textContent = "Сохранить";
+        });
       updateAvatarPopup.close();
     })
     .catch(err => console.log(err));
@@ -110,17 +129,6 @@ addCardPopup.setEventListeners();
 deleteCardPopup.setEventListeners();
 updateAvatarPopup.setEventListeners();
 const formValidators = {};
-const enableValidation = (config) => {
-  const formList = Array.from(document.querySelectorAll(config.formSelector))
-  formList.forEach((formElement) => {
-    const validator = new FormValidator(config, formElement);
-    const formName = formElement.getAttribute("name");
-    formValidators[formName] = validator;
-    validator.enableValidation();
-  });
-};
-
-enableValidation(validationConfig);
 
 const handleEditProfileButtonClick = () => {
   editProfileSubmitButton.textContent = "Сохранить";
