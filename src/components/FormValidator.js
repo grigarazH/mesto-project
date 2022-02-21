@@ -8,6 +8,8 @@ export default class FormValidator {
     this._inputErrorClass = inputErrorClass;
     this._errorClass = errorClass;
     this._formElement = formElement;
+    this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
+    this._buttonElement = this._formElement.querySelector(this._submitButtonSelector);
   }
 
   // Метод, отображающий ошибку для поля ввода
@@ -51,24 +53,20 @@ export default class FormValidator {
 
   // Устанавливает обработчики событий для валидации формы
   _setEventListeners() {
-    const inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
-    const buttonElement = this._formElement.querySelector(this._submitButtonSelector);
-    this._toggleButtonState(inputList, buttonElement);
-    inputList.forEach(inputElement => {
+    this._toggleButtonState(this._inputList, this._buttonElement);
+    this._inputList.forEach(inputElement => {
       inputElement.addEventListener('input', () => {
         this._checkInputValidity(inputElement);
-        this._toggleButtonState(inputList, buttonElement);
+        this._toggleButtonState(this._inputList, this._buttonElement);
       });
     });
   }
 
   // Выполняет ручную валидацию формы
   validateForm() {
-    const inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
-    const buttonElement = this._formElement.querySelector(this._submitButtonSelector);
-    inputList.forEach(inputElement => {
+    this._inputList.forEach(inputElement => {
       this._checkInputValidity(inputElement);
-      this._toggleButtonState(inputList, buttonElement);
+      this._toggleButtonState(this._inputList, this._buttonElement);
     });
   }
 
