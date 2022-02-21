@@ -6,6 +6,7 @@ export default class Card {
     this._likeButton = this._element.querySelector(".card__like-button");
     this._deleteButton = this._element.querySelector(".card__delete-button");
     this._likeAmount = this._element.querySelector(".card__like-amount");
+    this._cardImage = this._element.querySelector(".card__image");
     this._card = card;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
@@ -52,8 +53,8 @@ export default class Card {
       this._likeButton.classList.remove("card__like-button_active");
     }
     this._element.querySelector('.card__title').textContent = this._card.name;
-    this._element.querySelector('.card__image').src = this._card.link;
-    this._element.querySelector('.card__image').alt = this._card.name;
+    this._cardImage.src = this._card.link;
+    this._cardImage.alt = this._card.name;
     this._likeAmount.textContent = this._card.likes.length;
     this._setEventListeners();
     return this._element;
