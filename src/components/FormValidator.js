@@ -43,17 +43,17 @@ export default class FormValidator {
   }
 
   // Отключает кнопку отправки формы, если имеется хотя бы одно невалидное поле ввода. В противном случае активирует кнопку.
-  _toggleButtonState(inputList, buttonElement) {
-    if(this._hasInvalidInput(inputList)) {
-      buttonElement.disabled = true;
+  _toggleButtonState() {
+    if(this._hasInvalidInput(this._inputList)) {
+      this._buttonElement.disabled = true;
     }else{
-      buttonElement.disabled = false;
+      this._buttonElement.disabled = false;
     }
   }
 
   // Устанавливает обработчики событий для валидации формы
   _setEventListeners() {
-    this._toggleButtonState(this._inputList, this._buttonElement);
+    this._toggleButtonState();
     this._inputList.forEach(inputElement => {
       inputElement.addEventListener('input', () => {
         this._checkInputValidity(inputElement);
@@ -73,5 +73,12 @@ export default class FormValidator {
   // Включает валидацию для формы
   enableValidation() {
     this._setEventListeners();
+  }
+
+  resetValidation() {
+    this._toggleButtonState();
+    this._inputList.forEach(input => {
+      this._hideInputError(input);
+    });
   }
 }
