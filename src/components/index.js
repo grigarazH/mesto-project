@@ -101,8 +101,8 @@ const editProfilePopup = new PopupWithForm(".popup_type_edit-profile", inputValu
 
 const addCardPopup = new PopupWithForm(".popup_type_add-card", inputValues => {
   const card = {
-    name: addCardNameInput.value,
-    link: addCardLinkInput.value,
+    name: inputValues["add-card-name"],
+    link: inputValues["add-card-link"],
   };
   addCardPopup.renderLoading(true);
   api.addCard(card)
