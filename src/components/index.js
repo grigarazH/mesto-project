@@ -87,11 +87,11 @@ const deleteCardPopup = new PopupWithForm(".popup_type_delete-card", inputValues
 });
 
 const editProfilePopup = new PopupWithForm(".popup_type_edit-profile", inputValues => {
-  editProfileSubmitButton.textContent = "Сохранение...";
+  editProfilePopup.renderLoading(true)
   console.log(inputValues);
   userInfo.setUserInfo({name: inputValues["edit-profile-name"], about: inputValues["edit-profile-subtitle"]})
     .finally(() => {
-      editProfileSubmitButton.textContent = "Сохранить";
+      editProfilePopup.renderLoading(false)
     });
   editProfilePopup.close();
 });
@@ -101,7 +101,7 @@ const addCardPopup = new PopupWithForm(".popup_type_add-card", inputValues => {
     name: addCardNameInput.value,
     link: addCardLinkInput.value,
   };
-  addCardSubmitButton.textContent = "Сохранение...";
+  addCardPopup.renderLoading(true);
   api.addCard(card)
     .then(card => {
       cardSection.addItem(card);
@@ -109,16 +109,19 @@ const addCardPopup = new PopupWithForm(".popup_type_add-card", inputValues => {
       formValidators["add_card"].validateForm();
       addCardPopup.close();
     })
-    .catch(err => console.log(err));
+    .catch(err => console.log(err))
+    .finally(() => {
+      addCardPopup.renderLoading(false);
+    })
 });
 
 const updateAvatarPopup = new PopupWithForm(".popup_type_update-avatar", inputValues => {
-  updateAvatarSubmitButton.textContent = "Сохранение...";
+  updateAvatarPopup.renderLoading(true);
   api.updateAvatar(inputValues["update-avatar-link"])
     .then(user => {
       userInfo.setUserInfo(user)
         .finally(() => {
-          updateAvatarSubmitButton.textContent = "Сохранить";
+          updateAvatarPopup.renderLoading(false);
         });
       updateAvatarPopup.close();
     })
