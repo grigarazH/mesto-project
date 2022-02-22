@@ -8,6 +8,9 @@ export default class UserInfo {
     this._avatarSelector = avatarSelector;
     this._setUserCallback = setUserCallback;
     this._fetchUserCallback = fetchUserCallback;
+    this._nameElement = document.querySelector(this._nameSelector);
+    this._aboutElement = document.querySelector(this._aboutSelector);
+    this._avatarElement = document.querySelector(this._avatarSelector);
   }
 
   // Получает информацию о пользователе с сервера
@@ -24,12 +27,9 @@ export default class UserInfo {
 
   // Осуществляет обновление данных о пользователе на странице
   render(){
-    const nameElement = document.querySelector(this._nameSelector);
-    const aboutElement = document.querySelector(this._aboutSelector);
-    const avatarElement = document.querySelector(this._avatarSelector);
-    avatarElement.src = this._user.avatar;
-    nameElement.textContent = this._user.name;
-    aboutElement.textContent = this._user.about;
+    this._avatarElement.src = this._user.avatar;
+    this._nameElement.textContent = this._user.name;
+    this._aboutElement.textContent = this._user.about;
   }
 
   // Отправляет информацию о пользователе на сервер и осуществляет обновление данных о пользователе на странице
