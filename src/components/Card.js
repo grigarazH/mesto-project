@@ -2,11 +2,6 @@
 // удаления, булевые параметры, отвечающие за то, лайкнута ли карточка и нужно ли отображать кнопку удаления.
 export default class Card {
   constructor(card, templateSelector, handleCardClick, handleLikeClick, handleDeleteClick, isLiked, showDelete) {
-    this._element = this._getElement();
-    this._likeButton = this._element.querySelector(".card__like-button");
-    this._deleteButton = this._element.querySelector(".card__delete-button");
-    this._likeAmount = this._element.querySelector(".card__like-amount");
-    this._cardImage = this._element.querySelector(".card__image");
     this.card = card;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
@@ -14,12 +9,18 @@ export default class Card {
     this._handleDeleteClick = handleDeleteClick;
     this.isLiked = isLiked;
     this._showDelete = showDelete;
+    this._element = this._getElement();
+    this._likeButton = this._element.querySelector(".card__like-button");
+    this._deleteButton = this._element.querySelector(".card__delete-button");
+    this._likeAmount = this._element.querySelector(".card__like-amount");
+    this._cardImage = this._element.querySelector(".card__image");
   }
 
 
 
   // Возвращает элемент карточки, сгенерированный из шаблона
   _getElement() {
+    console.log(this._templateSelector);
     const cardElement = document.querySelector(this._templateSelector).content.querySelector('.card').cloneNode(true);
     return cardElement;
   }

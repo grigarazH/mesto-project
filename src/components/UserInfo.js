@@ -2,7 +2,7 @@
 // Класс с информацией о пользователе, конструктор принимает селекторы элементов имени пользователя, информации о пользователе, аватара и колбек-функции
 // для получение информации о пользователе с сервера и отправки информации о пользователе на сервер
 export default class UserInfo {
-  constructor(nameSelector, aboutSelector, avatarSelector, fetchUserCallback,setUserCallback) {
+  constructor(nameSelector, aboutSelector, avatarSelector, fetchUserCallback, setUserCallback) {
     this._nameSelector = nameSelector;
     this._aboutSelector = aboutSelector;
     this._avatarSelector = avatarSelector;
@@ -34,10 +34,9 @@ export default class UserInfo {
 
   // Отправляет информацию о пользователе на сервер и осуществляет обновление данных о пользователе на странице
   setUserInfo({name, about}) {
-    this._setUserCallback({name, about}).then(fetchedUser => {
+    return this._setUserCallback({name, about}).then(fetchedUser => {
       this._user = fetchedUser;
       this.render();
-    })
-      .catch(err => console.log(err))
+    });
   }
 }

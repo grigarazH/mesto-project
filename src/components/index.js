@@ -29,6 +29,7 @@ const addCardNameInput = addCardForm.elements["add-card-name"];
 const addCardLinkInput = addCardForm.elements["add-card-link"];
 
 
+const formValidators = {};
 const enableValidation = (config) => {
   const formList = Array.from(document.querySelectorAll(config.formSelector))
   formList.forEach((formElement) => {
@@ -88,12 +89,14 @@ const deleteCardPopup = new PopupWithForm(".popup_type_delete-card", inputValues
 
 const editProfilePopup = new PopupWithForm(".popup_type_edit-profile", inputValues => {
   editProfilePopup.renderLoading(true)
-  console.log(inputValues);
   userInfo.setUserInfo({name: inputValues["edit-profile-name"], about: inputValues["edit-profile-subtitle"]})
+    .then(() => {
+      editProfilePopup.close();
+    })
+    .catch(err => console.log(err))
     .finally(() => {
       editProfilePopup.renderLoading(false)
     });
-  editProfilePopup.close();
 });
 
 const addCardPopup = new PopupWithForm(".popup_type_add-card", inputValues => {
@@ -120,10 +123,12 @@ const updateAvatarPopup = new PopupWithForm(".popup_type_update-avatar", inputVa
   api.updateAvatar(inputValues["update-avatar-link"])
     .then(user => {
       userInfo.setUserInfo(user)
+        .then(() => {
+          updateAvatarPopup.close();
+        })
         .finally(() => {
           updateAvatarPopup.renderLoading(false);
         });
-      updateAvatarPopup.close();
     })
     .catch(err => console.log(err));
 });
@@ -132,7 +137,6 @@ editProfilePopup.setEventListeners();
 addCardPopup.setEventListeners();
 deleteCardPopup.setEventListeners();
 updateAvatarPopup.setEventListeners();
-const formValidators = {};
 
 const handleEditProfileButtonClick = () => {
   formValidators["edit_profile"].resetValidation();
