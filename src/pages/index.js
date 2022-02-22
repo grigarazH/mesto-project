@@ -1,13 +1,13 @@
-import Card from './Card';
-import Section from "./Section";
-import '../pages/index.css';
+import Card from '../components/Card';
+import Section from "../components/Section";
+import './index.css';
 import {apiConfig, cardTemplateSelector, validationConfig} from "../utils/constants";
-import FormValidator from "./FormValidator";
-import Api from "./Api";
+import FormValidator from "../components/FormValidator";
+import Api from "../components/Api";
 import {getCards, getDeleteCardId, setCards, setDeleteCardId} from "../utils/utils";
-import PopupWithForm from "./PopupWithForm";
-import PopupWithImage from "./PopupWithImage";
-import UserInfo from "./UserInfo";
+import PopupWithForm from "../components/PopupWithForm";
+import PopupWithImage from "../components/PopupWithImage";
+import UserInfo from "../components/UserInfo";
 
 const profileAvatar = document.querySelector(".profile__avatar");
 const addCardPopupElement = document.querySelector(".popup_type_add-card");
