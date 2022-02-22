@@ -57,7 +57,7 @@ const cardSection = new Section({
     const cardElement = new Card(card, cardTemplateSelector, () => {
       photoPopup.open(card);
     }, (cardElement) => {
-      if (cardElement.isLiked) {
+      if (!cardElement.isLiked) {
         api.likeCard(card._id)
           .then(card => {
             cardElement.likeCard(card)
@@ -108,7 +108,6 @@ const addCardPopup = new PopupWithForm(".popup_type_add-card", inputValues => {
   api.addCard(card)
     .then(card => {
       cardSection.addItem(card);
-      getCards().unshift(card);
       formValidators["add_card"].validateForm();
       addCardPopup.close();
     })
