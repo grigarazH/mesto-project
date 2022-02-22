@@ -12,10 +12,11 @@ export default class Card {
     this._handleCardClick = handleCardClick;
     this._handleLikeClick = handleLikeClick;
     this._handleDeleteClick = handleDeleteClick;
-    this._isLiked = isLiked;
+    this.isLiked = isLiked;
     this._showDelete = showDelete;
-
   }
+
+
 
   // Возвращает элемент карточки, сгенерированный из шаблона
   _getElement() {
@@ -26,11 +27,13 @@ export default class Card {
   likeCard(card) {
     this._likeAmount.textContent = card.likes.length;
     this._likeButton.classList.add("card__like-button_active");
+    this.isLiked = true;
   }
 
   dislikeCard(card) {
     this._likeAmount.textContent = card.likes.length;
     this._likeButton.classList.remove("card__like-button_active");
+    this.isLiked = false;
   }
 
   // Добавляет обработчиков события карточке
@@ -47,7 +50,7 @@ export default class Card {
     } else {
       this._deleteButton.classList.add("card__delete-button_hidden");
     }
-    if (this._isLiked) {
+    if (this.isLiked) {
       this._likeButton.classList.add("card__like-button_active");
     } else {
       this._likeButton.classList.remove("card__like-button_active");

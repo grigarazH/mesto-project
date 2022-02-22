@@ -56,7 +56,7 @@ const cardSection = new Section({
     const cardElement = new Card(card, cardTemplateSelector, () => {
       photoPopup.open(card);
     }, (cardElement) => {
-      if (!likeButton.classList.contains("card__like-button_active")) {
+      if (cardElement.isLiked) {
         api.likeCard(card._id)
           .then(card => {
             cardElement.likeCard(card)
