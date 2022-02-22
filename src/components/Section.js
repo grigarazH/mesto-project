@@ -19,10 +19,4 @@ export default class Section {
     const itemElement = this._renderer(item);
     this._element.prepend(itemElement);
   }
-
-  // Осуществляет удаление элемента по индексу и селектору из секции
-  delete(index, selector) {
-    const elements = this._element.querySelectorAll(selector);
-    elements[index].remove();
-  }
 }

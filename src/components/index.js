@@ -39,6 +39,8 @@ const enableValidation = (config) => {
   });
 };
 
+let cardPendingDeletion
+
 enableValidation(validationConfig);
 
 const api = new Api(apiConfig);
@@ -68,7 +70,7 @@ const cardSection = new Section({
           .catch(err => console.log(err));
       }
     }, () => {
-      setDeleteCardId(card._id);
+      cardPendingDeletion = cardElement;
       deleteCardPopup.open();
     }, card.likes.some(likeUser => likeUser._id === userInfo.getUserInfo()._id), userInfo.getUserInfo()._id === card.owner._id);
     return cardElement.generate();
@@ -76,10 +78,9 @@ const cardSection = new Section({
 }, ".cards");
 
 const deleteCardPopup = new PopupWithForm(".popup_type_delete-card", inputValues => {
-  api.deleteCard(getDeleteCardId())
+  api.deleteCard(cardPendingDeletion.card._id)
     .then(() => {
-      const deletedCardIndex = getCards().findIndex(card => card._id === getDeleteCardId()); // Получение индекса удаляемой карточки в массиве объектов карточек
-      cardSection.delete(deletedCardIndex, ".card");
+      cardPendingDeletion.delete();
       deleteCardPopup.close();
     })
     .catch(err => console.log(err));

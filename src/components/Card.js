@@ -7,7 +7,7 @@ export default class Card {
     this._deleteButton = this._element.querySelector(".card__delete-button");
     this._likeAmount = this._element.querySelector(".card__like-amount");
     this._cardImage = this._element.querySelector(".card__image");
-    this._card = card;
+    this.card = card;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
     this._handleLikeClick = handleLikeClick;
@@ -52,11 +52,15 @@ export default class Card {
     } else {
       this._likeButton.classList.remove("card__like-button_active");
     }
-    this._element.querySelector('.card__title').textContent = this._card.name;
-    this._cardImage.src = this._card.link;
-    this._cardImage.alt = this._card.name;
-    this._likeAmount.textContent = this._card.likes.length;
+    this._element.querySelector('.card__title').textContent = this.card.name;
+    this._cardImage.src = this.card.link;
+    this._cardImage.alt = this.card.name;
+    this._likeAmount.textContent = this.card.likes.length;
     this._setEventListeners();
     return this._element;
+  }
+
+  delete() {
+    this._element.remove();
   }
 }
