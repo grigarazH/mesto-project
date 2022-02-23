@@ -62,14 +62,6 @@ export default class FormValidator {
     });
   }
 
-  // Выполняет ручную валидацию формы
-  validateForm() {
-    this._inputList.forEach(inputElement => {
-      this._checkInputValidity(inputElement);
-      this._toggleButtonState(this._inputList, this._buttonElement);
-    });
-  }
-
   // Включает валидацию для формы
   enableValidation() {
     this._setEventListeners();

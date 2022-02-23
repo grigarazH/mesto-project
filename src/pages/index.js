@@ -108,7 +108,6 @@ const addCardPopup = new PopupWithForm(".popup_type_add-card", inputValues => {
   api.addCard(card)
     .then(card => {
       cardSection.addItem(card);
-      formValidators["add_card"].validateForm();
       addCardPopup.close();
     })
     .catch(err => console.log(err))
@@ -142,20 +141,17 @@ const handleEditProfileButtonClick = () => {
   editProfilePopup.open();
   editProfileNameInput.value = userInfo.getUserInfo().name;
   editProfileSubtitleInput.value = userInfo.getUserInfo().about;
-  formValidators["edit_profile"].validateForm();
 }
 
 const handleUpdateAvatarButtonClick = () => {
   formValidators["update_avatar"].resetValidation();
   updateAvatarPopup.open();
   updateAvatarLinkInput.value = profileAvatar.src;
-  formValidators["update_avatar"].validateForm();
 }
 
 const handleAddCardButtonClick = () => {
   formValidators["add_card"].resetValidation();
   addCardPopup.open();
-  formValidators["add_card"].validateForm();
 }
 
 editProfileButton.addEventListener("click", handleEditProfileButtonClick);
