@@ -146,7 +146,6 @@ const handleEditProfileButtonClick = () => {
 const handleUpdateAvatarButtonClick = () => {
   formValidators["update_avatar"].resetValidation();
   updateAvatarPopup.open();
-  updateAvatarLinkInput.value = profileAvatar.src;
 }
 
 const handleAddCardButtonClick = () => {
